@@ -1,0 +1,63 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============================================
+    // USERS COLLECTION
+    // ============================================
+    match /users/{userId} {
+      // Users can read their own document
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // Users can update ONLY their displayName (not tokens, school, or createdAt)
+      allow update: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName'])
+                    && request.resource.data.displayName is string
+                    && request.resource.data.displayName.size() > 0
+                    && request.resource.data.displayName.size() <= 20;
+
+      // User docs are created server-side only (on-user-create trigger)
+      allow create: if false;
+      allow delete: if false;
+    }
+
+    // ============================================
+    // PREDICTIONS COLLECTION
+    // ============================================
+    match /predictions/{predictionId} {
+      // Users can read their own predictions
+      allow read: if request.auth != null
+                  && resource.data.uid == request.auth.uid;
+
+      // All writes happen server-side via Cloud Functions (admin SDK)
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // ============================================
+    // MATCHES CACHE (read-only to authenticated clients)
+    // ============================================
+    match /matchesCache/{date} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // ============================================
+    // STANDINGS CACHE (read-only to authenticated clients)
+    // ============================================
+    match /standingsCache/{stage} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // ============================================
+    // DENY EVERYTHING ELSE BY DEFAULT
+    // ============================================
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
