@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,6 +9,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFunctions _functions = FirebaseFunctions.instance;
 
   Stream<User?> get authStateChanges => _auth.authStateChanges();
   User? get currentUser => _auth.currentUser;
@@ -25,7 +27,9 @@ class AuthRepository {
     final idToken = account.authentication.idToken;
 
     final credential = GoogleAuthProvider.credential(idToken: idToken);
-    return _auth.signInWithCredential(credential);
+    final result = await _auth.signInWithCredential(credential);
+    await _ensureUserDoc();
+    return result;
   }
 
   // Apple Sign-In
@@ -45,15 +49,19 @@ class AuthRepository {
       idToken: appleCredential.identityToken,
       rawNonce: rawNonce,
     );
-    return _auth.signInWithCredential(oauthCredential);
+    final result = await _auth.signInWithCredential(oauthCredential);
+    await _ensureUserDoc();
+    return result;
   }
 
   // Email/Password Sign-In
-  Future<UserCredential> signInWithEmail(String email, String password) {
-    return _auth.signInWithEmailAndPassword(
+  Future<UserCredential> signInWithEmail(String email, String password) async {
+    final result = await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+    await _ensureUserDoc();
+    return result;
   }
 
   // Email/Password Registration
@@ -67,7 +75,17 @@ class AuthRepository {
       password: password,
     );
     await credential.user?.updateDisplayName(displayName);
+    await _ensureUserDoc();
     return credential;
+  }
+
+  // Initialize user profile doc in Firestore (idempotent — safe to call on every sign-in)
+  Future<void> _ensureUserDoc() async {
+    try {
+      await _functions.httpsCallable('onUserCreated').call();
+    } catch (_) {
+      // Non-fatal — profile will be created on next sign-in
+    }
   }
 
   Future<void> signOut() async {

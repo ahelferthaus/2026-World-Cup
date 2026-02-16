@@ -1,20 +1,30 @@
-import { beforeUserCreated } from "firebase-functions/v2/identity";
+import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 import { CONFIG } from "../config";
 
 const db = admin.firestore();
 
-export const onUserCreated = beforeUserCreated(async (event) => {
-  const user = event.data;
-  if (!user) return;
+// Called once after user signs up to initialize their profile document.
+// Client calls this after first authentication.
+export const onUserCreated = onCall(async (request) => {
+  const auth = request.auth;
+  if (!auth) {
+    throw new HttpsError("unauthenticated", "Must be signed in.");
+  }
 
-  const uid = user.uid;
-  const displayName = user.displayName || user.email?.split("@")[0] || "Player";
+  const uid = auth.uid;
+  const userRef = db.collection("users").doc(uid);
+  const existing = await userRef.get();
 
-  await db.collection("users").doc(uid).set({
-    displayName: displayName,
-    school: "Centaurus High School",
-    tokens: CONFIG.tokens.initialBalance,
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
-  });
+  // Only create if the doc doesn't already exist (idempotent)
+  if (!existing.exists) {
+    await userRef.set({
+      displayName: auth.token.name || auth.token.email?.split("@")[0] || "Player",
+      school: "Centaurus High School",
+      tokens: CONFIG.tokens.initialBalance,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+  }
+
+  return { success: true };
 });
