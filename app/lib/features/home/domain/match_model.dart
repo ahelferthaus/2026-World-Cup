@@ -10,6 +10,7 @@ class MatchModel {
   final TeamModel awayTeam;
   final int? scoreHome;
   final int? scoreAway;
+  final Map<String, dynamic>? rawData;
 
   const MatchModel({
     required this.fixtureId,
@@ -21,6 +22,7 @@ class MatchModel {
     required this.awayTeam,
     this.scoreHome,
     this.scoreAway,
+    this.rawData,
   });
 
   factory MatchModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class MatchModel {
       awayTeam: TeamModel.fromJson(json['awayTeam'] as Map<String, dynamic>),
       scoreHome: home,
       scoreAway: away,
+      rawData: json,
     );
   }
 

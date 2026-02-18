@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/data/demo_data.dart';
 import '../../../core/extensions/async_value_extensions.dart';
 import '../../../core/utils/token_formatter.dart';
 import '../../../core/widgets/app_loading_indicator.dart';
@@ -30,8 +31,12 @@ class ProfileScreen extends ConsumerWidget {
           }
 
           final predictions = predictionsAsync.valueOrNull ?? [];
-          final totalPredictions = predictions.length;
-          final wonPredictions = predictions.where((p) => p.isWon).length;
+          final totalPredictions = user.predictionsCount > 0
+              ? user.predictionsCount
+              : predictions.length;
+          final wonPredictions = user.predictionsWon > 0
+              ? user.predictionsWon
+              : predictions.where((p) => p.isWon).length;
           final winRate = totalPredictions > 0
               ? (wonPredictions / totalPredictions * 100).toStringAsFixed(0)
               : '0';
@@ -56,9 +61,33 @@ class ProfileScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.md),
                 Text(user.displayName, style: AppTextStyles.heading2),
                 const SizedBox(height: AppSpacing.xs),
-                Chip(
-                  label: Text(user.school),
-                  avatar: const Icon(Icons.school, size: 16),
+                // School + State + Grade
+                Wrap(
+                  spacing: AppSpacing.xs,
+                  runSpacing: AppSpacing.xs,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    Chip(
+                      label: Text(user.school, style: const TextStyle(fontSize: 12)),
+                      avatar: const Icon(Icons.school, size: 16),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      visualDensity: VisualDensity.compact,
+                    ),
+                    if (user.state.isNotEmpty)
+                      Chip(
+                        label: Text(user.state, style: const TextStyle(fontSize: 12)),
+                        avatar: const Icon(Icons.location_on, size: 16),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    if (user.grade.isNotEmpty)
+                      Chip(
+                        label: Text(user.grade, style: const TextStyle(fontSize: 12)),
+                        avatar: const Icon(Icons.grade, size: 16),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        visualDensity: VisualDensity.compact,
+                      ),
+                  ],
                 ),
                 const SizedBox(height: AppSpacing.xl),
                 // Token balance card
@@ -92,30 +121,89 @@ class ProfileScreen extends ConsumerWidget {
                           color: AppColors.textOnPrimary.withValues(alpha: 0.7),
                         ),
                       ),
+                      const SizedBox(height: AppSpacing.md),
+                      OutlinedButton.icon(
+                        onPressed: () => context.push('/store'),
+                        icon: const Icon(Icons.add, size: 16, color: Colors.white),
+                        label: const Text('Buy More Tokens', style: TextStyle(color: Colors.white)),
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.white54),
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                // Stats row
+                // Stats grid
                 Row(
                   children: [
                     Expanded(
                       child: _StatCard(
                         label: 'Predictions',
                         value: '$totalPredictions',
+                        icon: Icons.sports_soccer,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md),
+                    const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: _StatCard(
                         label: 'Win Rate',
                         value: '$winRate%',
+                        icon: Icons.trending_up,
+                        valueColor: double.parse(winRate) >= 50
+                            ? AppColors.success
+                            : null,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _StatCard(
+                        label: 'Wagered',
+                        value: TokenFormatter.format(user.totalWagered),
+                        icon: Icons.casino,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: _StatCard(
+                        label: 'Boldness',
+                        value: '${user.boldnessScore.toStringAsFixed(0)}%',
+                        icon: Icons.local_fire_department,
+                        valueColor: user.boldnessScore >= 60
+                            ? AppColors.secondary
+                            : null,
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                // Action list
+                // Quick Links
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Quick Links', style: AppTextStyles.labelLarge),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                _ActionTile(
+                  icon: Icons.handshake,
+                  label: 'My Prop Bets',
+                  onTap: () => context.push('/propbets'),
+                ),
+                _ActionTile(
+                  icon: Icons.groups,
+                  label: 'Teams & Players',
+                  onTap: () => context.push('/teams'),
+                ),
+                _ActionTile(
+                  icon: Icons.newspaper,
+                  label: 'World Cup News',
+                  onTap: () => context.push('/news'),
+                ),
+                const Divider(height: AppSpacing.xl),
+                // Account actions
                 _ActionTile(
                   icon: Icons.history,
                   label: 'Prediction History',
@@ -149,10 +237,15 @@ class ProfileScreen extends ConsumerWidget {
                       ),
                     );
                     if (confirmed == true) {
-                      await ref.read(authRepositoryProvider).signOut();
+                      if (useDemoData) {
+                        ref.read(demoLoggedInProvider.notifier).logout();
+                      } else {
+                        await ref.read(authRepositoryProvider).signOut();
+                      }
                     }
                   },
                 ),
+                const SizedBox(height: AppSpacing.xl),
               ],
             ),
           );
@@ -163,10 +256,17 @@ class ProfileScreen extends ConsumerWidget {
 }
 
 class _StatCard extends StatelessWidget {
-  const _StatCard({required this.label, required this.value});
+  const _StatCard({
+    required this.label,
+    required this.value,
+    required this.icon,
+    this.valueColor,
+  });
 
   final String label;
   final String value;
+  final IconData icon;
+  final Color? valueColor;
 
   @override
   Widget build(BuildContext context) {
@@ -181,8 +281,13 @@ class _StatCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(value, style: AppTextStyles.heading2),
+          Icon(icon, size: 20, color: Colors.grey),
           const SizedBox(height: AppSpacing.xs),
+          Text(
+            value,
+            style: AppTextStyles.heading3.copyWith(color: valueColor),
+          ),
+          const SizedBox(height: 2),
           Text(
             label,
             style: AppTextStyles.bodySmall.copyWith(color: Colors.grey),

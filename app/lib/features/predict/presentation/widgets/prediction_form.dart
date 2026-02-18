@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/data/demo_data.dart';
 import '../../../../core/extensions/async_value_extensions.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/utils/token_formatter.dart';
@@ -62,18 +63,23 @@ class _PredictionFormState extends ConsumerState<PredictionForm> {
 
     setState(() => _isSubmitting = true);
     try {
-      final idToken = await ref.read(idTokenProvider.future);
-      if (idToken == null) throw Exception('Not authenticated');
+      if (useDemoData) {
+        // In demo mode, simulate a successful prediction
+        await Future.delayed(const Duration(milliseconds: 500));
+      } else {
+        final idToken = await ref.read(idTokenProvider.future);
+        if (idToken == null) throw Exception('Not authenticated');
 
-      await ref.read(predictionsRepositoryProvider).createPrediction(
-            idToken: idToken,
-            matchId: widget.match.fixtureId.toString(),
-            type: _exactScore ? 'exactScore' : 'winner',
-            selection: _exactScore ? 'exactScore' : _selectedOutcome!,
-            wager: _wager.toInt(),
-            scoreHome: _exactScore ? _scoreHome : null,
-            scoreAway: _exactScore ? _scoreAway : null,
-          );
+        await ref.read(predictionsRepositoryProvider).createPrediction(
+              idToken: idToken,
+              matchId: widget.match.fixtureId.toString(),
+              type: _exactScore ? 'exactScore' : 'winner',
+              selection: _exactScore ? 'exactScore' : _selectedOutcome!,
+              wager: _wager.toInt(),
+              scoreHome: _exactScore ? _scoreHome : null,
+              scoreAway: _exactScore ? _scoreAway : null,
+            );
+      }
 
       if (mounted) {
         // Refresh data

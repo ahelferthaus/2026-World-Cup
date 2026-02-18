@@ -31,3 +31,17 @@ final schoolLeaderboardProvider = FutureProvider<List<LeaderboardEntry>>((ref) a
       .read(leaderboardRepositoryProvider)
       .fetchSchoolLeaderboard(idToken, 'Centaurus High School');
 });
+
+final schoolAggregatesProvider = FutureProvider<List<AggregateEntry>>((ref) async {
+  if (useDemoData) {
+    return DemoData.schoolAggregates.map((e) => AggregateEntry.fromJson(e)).toList();
+  }
+  return [];
+});
+
+final stateAggregatesProvider = FutureProvider<List<AggregateEntry>>((ref) async {
+  if (useDemoData) {
+    return DemoData.stateAggregates.map((e) => AggregateEntry.fromJson(e)).toList();
+  }
+  return [];
+});

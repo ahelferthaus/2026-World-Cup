@@ -11,7 +11,7 @@ class TeamModel {
 
   factory TeamModel.fromJson(Map<String, dynamic> json) {
     return TeamModel(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       name: json['name'] as String,
       logo: json['logo'] as String,
     );

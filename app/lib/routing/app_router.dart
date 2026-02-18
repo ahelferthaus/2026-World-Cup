@@ -8,10 +8,14 @@ import '../features/auth/presentation/providers/auth_providers.dart';
 import '../features/auth/presentation/register_screen.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/leaderboard/presentation/leaderboard_screen.dart';
+import '../features/news/presentation/news_screen.dart';
 import '../features/predict/presentation/predict_screen.dart';
 import '../features/profile/presentation/edit_name_screen.dart';
 import '../features/profile/presentation/prediction_history_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
+import '../features/propbets/presentation/prop_bets_screen.dart';
+import '../features/store/presentation/token_store_screen.dart';
+import '../features/teams/presentation/teams_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -42,6 +46,23 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/register',
         builder: (_, __) => const RegisterScreen(),
+      ),
+      // Full-screen routes (not in bottom nav)
+      GoRoute(
+        path: '/teams',
+        builder: (_, __) => const TeamsScreen(),
+      ),
+      GoRoute(
+        path: '/news',
+        builder: (_, __) => const NewsScreen(),
+      ),
+      GoRoute(
+        path: '/store',
+        builder: (_, __) => const TokenStoreScreen(),
+      ),
+      GoRoute(
+        path: '/propbets',
+        builder: (_, __) => const PropBetsScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, __, navigationShell) {

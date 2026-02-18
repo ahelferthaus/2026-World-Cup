@@ -10,13 +10,7 @@ final profileRepositoryProvider = Provider<ProfileRepository>((ref) {
 
 final userProfileProvider = StreamProvider<AppUser?>((ref) {
   if (useDemoData) {
-    final d = DemoData.userProfile;
-    return Stream.value(AppUser(
-      uid: d['uid'] as String,
-      displayName: d['displayName'] as String,
-      school: d['school'] as String,
-      tokens: d['tokens'] as int,
-    ));
+    return Stream.value(AppUser.fromDemo(DemoData.userProfile));
   }
 
   final uid = ref.watch(currentUidProvider);

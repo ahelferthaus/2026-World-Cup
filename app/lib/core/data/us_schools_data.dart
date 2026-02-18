@@ -1,0 +1,166 @@
+// US high schools organized by state for the school picker.
+// In production this would be fetched from an API, but we include a sample set
+// so the demo works offline.
+
+class UsSchoolsData {
+  UsSchoolsData._();
+
+  static const List<String> states = [
+    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado',
+    'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho',
+    'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+    'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
+    'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon',
+    'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+    'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
+    'West Virginia', 'Wisconsin', 'Wyoming',
+  ];
+
+  /// Sample schools per state. A production version would use a search API.
+  static List<String> schoolsForState(String state) {
+    return _schoolsByState[state] ?? ['$state High School'];
+  }
+
+  static const Map<String, List<String>> _schoolsByState = {
+    'Colorado': [
+      'Centaurus High School',
+      'Fairview High School',
+      'Boulder High School',
+      'Monarch High School',
+      'Broomfield High School',
+      'Legacy High School',
+      'Longmont High School',
+      'Silver Creek High School',
+      'Niwot High School',
+      'Peak to Peak Charter School',
+      'Cherry Creek High School',
+      'Grandview High School',
+      'Regis Jesuit High School',
+      'ThunderRidge High School',
+      'Highlands Ranch High School',
+      'Chaparral High School',
+      'Columbine High School',
+      'Chatfield High School',
+      'Arvada West High School',
+      'Ralston Valley High School',
+    ],
+    'California': [
+      'Mira Costa High School',
+      'Palo Alto High School',
+      'Gunn High School',
+      'Monta Vista High School',
+      'Los Gatos High School',
+      'Torrey Pines High School',
+      'La Jolla High School',
+      'Beverly Hills High School',
+      'Santa Monica High School',
+      'Redondo Union High School',
+    ],
+    'Texas': [
+      'Highland Park High School',
+      'Westlake High School',
+      'Southlake Carroll High School',
+      'Allen High School',
+      'Plano East High School',
+      'Katy High School',
+      'The Woodlands High School',
+      'Lake Travis High School',
+      'Flower Mound High School',
+      'Coppell High School',
+    ],
+    'New York': [
+      'Stuyvesant High School',
+      'Bronx Science High School',
+      'Brooklyn Tech High School',
+      'Scarsdale High School',
+      'Horace Greeley High School',
+      'Great Neck North High School',
+      'Jericho High School',
+      'Syosset High School',
+      'Roslyn High School',
+      'Mamaroneck High School',
+    ],
+    'Florida': [
+      'Pine Crest School',
+      'American Heritage School',
+      'Belen Jesuit Preparatory',
+      'Weston High School',
+      'Winter Park High School',
+      'Oviedo High School',
+      'Plant High School',
+      'Riverview High School',
+      'Vero Beach High School',
+      'Ponte Vedra High School',
+    ],
+    'Massachusetts': [
+      'Boston Latin School',
+      'Lexington High School',
+      'Brookline High School',
+      'Newton North High School',
+      'Wellesley High School',
+      'Andover High School',
+      'Acton-Boxborough High School',
+      'Westford Academy',
+      'Concord-Carlisle High School',
+      'Needham High School',
+    ],
+    'Virginia': [
+      'Thomas Jefferson High School',
+      'Langley High School',
+      'McLean High School',
+      'Fairfax High School',
+      'Oakton High School',
+      'Chantilly High School',
+      'Centreville High School',
+      'Woodson High School',
+      'Lake Braddock High School',
+      'James Madison High School',
+    ],
+    'Georgia': [
+      'Brookwood High School',
+      'Lambert High School',
+      'North Gwinnett High School',
+      'Johns Creek High School',
+      'Walton High School',
+      'Lassiter High School',
+      'Milton High School',
+      'Roswell High School',
+      'Alpharetta High School',
+      'Peachtree Ridge High School',
+    ],
+    'Illinois': [
+      'New Trier High School',
+      'Hinsdale Central High School',
+      'Naperville Central High School',
+      'Stevenson High School',
+      'Glenbrook North High School',
+      'Lake Forest High School',
+      'Whitney Young High School',
+      'Barrington High School',
+      'Downers Grove North High School',
+      'Neuqua Valley High School',
+    ],
+    'Pennsylvania': [
+      'Lower Merion High School',
+      'Radnor High School',
+      'Council Rock High School North',
+      'Central Bucks West High School',
+      'North Allegheny High School',
+      'State College Area High School',
+      'Upper Dublin High School',
+      'Garnet Valley High School',
+      'Conestoga High School',
+      'Harriton High School',
+    ],
+  };
+
+  /// Grade levels available for selection.
+  static const List<String> gradeLevels = [
+    'Freshman (9th)',
+    'Sophomore (10th)',
+    'Junior (11th)',
+    'Senior (12th)',
+  ];
+}
