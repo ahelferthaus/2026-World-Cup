@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class TeamFlag extends StatelessWidget {
@@ -13,20 +12,28 @@ class TeamFlag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: logoUrl,
+    return Image.network(
+      logoUrl,
       width: size,
       height: size,
-      placeholder: (_, __) => SizedBox(
-        width: size,
-        height: size,
-        child: const CircularProgressIndicator(strokeWidth: 2),
-      ),
-      errorWidget: (_, __, ___) => Icon(
-        Icons.flag,
-        size: size,
-        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
-      ),
+      fit: BoxFit.contain,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return SizedBox(
+          width: size,
+          height: size,
+          child: const Center(
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        );
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(
+          Icons.flag,
+          size: size,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+        );
+      },
     );
   }
 }

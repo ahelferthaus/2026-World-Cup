@@ -3,14 +3,14 @@ class AppUser {
   final String displayName;
   final String school;
   final int tokens;
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   const AppUser({
     required this.uid,
     required this.displayName,
     required this.school,
     required this.tokens,
-    required this.createdAt,
+    this.createdAt,
   });
 
   factory AppUser.fromFirestore(String uid, Map<String, dynamic> data) {

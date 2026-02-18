@@ -41,6 +41,20 @@ class PredictionModel {
     );
   }
 
+  factory PredictionModel.fromDemo(Map<String, dynamic> data) {
+    return PredictionModel(
+      id: data['id'] as String,
+      uid: data['uid'] as String,
+      matchId: data['matchId'] as String,
+      type: data['type'] as String,
+      selection: data['selection'] as String,
+      wager: data['wager'] as int,
+      status: data['status'] as String,
+      payout: data['payout'] as int? ?? 0,
+      createdAt: DateTime.parse(data['createdAt'] as String),
+    );
+  }
+
   bool get isPending => status == 'pending';
   bool get isWon => status == 'won';
   bool get isLost => status == 'lost';

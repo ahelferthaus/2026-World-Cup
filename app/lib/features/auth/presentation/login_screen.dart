@@ -1,10 +1,11 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/data/demo_data.dart';
 import '../../../core/extensions/context_extensions.dart';
 import 'providers/auth_providers.dart';
 
@@ -18,7 +19,12 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _isLoading = false;
 
+  void _handleDemoLogin() {
+    ref.read(demoLoggedInProvider.notifier).login();
+  }
+
   Future<void> _handleGoogleSignIn() async {
+    if (useDemoData) { _handleDemoLogin(); return; }
     setState(() => _isLoading = true);
     try {
       await ref.read(authRepositoryProvider).signInWithGoogle();
@@ -85,7 +91,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const Spacer(flex: 2),
                 // Sign-in buttons
-                if (Platform.isIOS) ...[
+                if (!kIsWeb && defaultTargetPlatform == TargetPlatform.iOS) ...[
                   _SignInButton(
                     label: 'Sign in with Apple',
                     icon: Icons.apple,
@@ -109,7 +115,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   backgroundColor: Colors.transparent,
                   textColor: AppColors.textOnPrimary,
                   border: true,
-                  onPressed: _isLoading ? null : () => context.go('/register'),
+                  onPressed: _isLoading ? null : () {
+                    if (useDemoData) { _handleDemoLogin(); return; }
+                    context.go('/register');
+                  },
                 ),
                 const Spacer(),
                 // Disclaimer

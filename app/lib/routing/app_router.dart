@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../core/data/demo_data.dart';
 import '../core/extensions/async_value_extensions.dart';
 import '../features/auth/presentation/login_screen.dart';
 import '../features/auth/presentation/providers/auth_providers.dart';
@@ -14,11 +15,18 @@ import '../features/profile/presentation/profile_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
+  // Watch demo login state so router refreshes when it changes
+  if (useDemoData) ref.watch(demoLoggedInProvider);
 
   return GoRouter(
     initialLocation: '/home',
     redirect: (context, state) {
-      final isLoggedIn = authState.valueOrNull != null;
+      final bool isLoggedIn;
+      if (useDemoData) {
+        isLoggedIn = ref.read(demoLoggedInProvider);
+      } else {
+        isLoggedIn = authState.valueOrNull != null;
+      }
       final isAuthRoute = state.matchedLocation == '/login' ||
           state.matchedLocation == '/register';
 
@@ -93,38 +101,69 @@ class _AppScaffold extends StatelessWidget {
 
   final StatefulNavigationShell navigationShell;
 
+  static const _navItems = <({IconData icon, IconData activeIcon, String label})>[
+    (icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'),
+    (icon: Icons.sports_outlined, activeIcon: Icons.sports, label: 'Predict'),
+    (icon: Icons.leaderboard_outlined, activeIcon: Icons.leaderboard, label: 'Rankings'),
+    (icon: Icons.person_outlined, activeIcon: Icons.person, label: 'Profile'),
+  ];
+
+  void _onTap(int index) => navigationShell.goBranch(
+        index,
+        initialLocation: index == navigationShell.currentIndex,
+      );
+
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final useRail = width >= 600;
+    final useExtendedRail = width >= 900;
+
+    if (useRail) {
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: navigationShell.currentIndex,
+              onDestinationSelected: _onTap,
+              extended: useExtendedRail,
+              labelType: useExtendedRail
+                  ? NavigationRailLabelType.none
+                  : NavigationRailLabelType.selected,
+              destinations: _navItems
+                  .map((item) => NavigationRailDestination(
+                        icon: Icon(item.icon),
+                        selectedIcon: Icon(item.activeIcon),
+                        label: Text(item.label),
+                      ))
+                  .toList(),
+            ),
+            const VerticalDivider(thickness: 1, width: 1),
+            Expanded(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: navigationShell,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
-        onTap: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
-        ),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_outlined),
-            activeIcon: Icon(Icons.sports),
-            label: 'Predict',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.leaderboard_outlined),
-            activeIcon: Icon(Icons.leaderboard),
-            label: 'Rankings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+        onTap: _onTap,
+        items: _navItems
+            .map((item) => BottomNavigationBarItem(
+                  icon: Icon(item.icon),
+                  activeIcon: Icon(item.activeIcon),
+                  label: item.label,
+                ))
+            .toList(),
       ),
     );
   }

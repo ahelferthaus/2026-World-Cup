@@ -24,16 +24,20 @@ class MatchModel {
   });
 
   factory MatchModel.fromJson(Map<String, dynamic> json) {
+    // Support both API format and demo format
+    final int? home = json['score']?['home'] as int? ?? json['homeScore'] as int?;
+    final int? away = json['score']?['away'] as int? ?? json['awayScore'] as int?;
+
     return MatchModel(
-      fixtureId: json['fixtureId'] as int,
+      fixtureId: (json['fixtureId'] ?? json['id']) as int,
       kickoff: json['kickoff'] as String,
       status: json['status'] as String,
-      statusLong: json['statusLong'] as String,
+      statusLong: (json['statusLong'] ?? json['status']) as String,
       elapsed: json['elapsed'] as int?,
       homeTeam: TeamModel.fromJson(json['homeTeam'] as Map<String, dynamic>),
       awayTeam: TeamModel.fromJson(json['awayTeam'] as Map<String, dynamic>),
-      scoreHome: json['score']?['home'] as int?,
-      scoreAway: json['score']?['away'] as int?,
+      scoreHome: home,
+      scoreAway: away,
     );
   }
 
