@@ -68,6 +68,18 @@ class _QuickAccessBar extends StatelessWidget {
         child: Row(
           children: [
             _QuickChip(
+              icon: Icons.sports,
+              label: 'All Sports',
+              onTap: () => context.push('/sports'),
+              highlight: true,
+            ),
+            _QuickChip(
+              icon: Icons.sports_basketball,
+              label: 'NBA',
+              onTap: () => context.push('/nba'),
+              highlight: true,
+            ),
+            _QuickChip(
               icon: Icons.play_circle_fill,
               label: 'Live Game',
               onTap: () => context.push('/live/1'),

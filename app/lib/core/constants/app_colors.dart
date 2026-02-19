@@ -30,6 +30,12 @@ class AppColors {
   static const neonPurple = Color(0xFFBB86FC);
   static const neonCyan = Color(0xFF00E5FF);
   static const neonPink = Color(0xFFFF4081);
+  static const neonBlue = Color(0xFF448AFF);
+
+  // Sport-specific brand colors
+  static const nbaOrange = Color(0xFFF37321);
+  static const nbaBlue = Color(0xFF1D428A);
+  static const nbaRed = Color(0xFFC8102E);
 
   // Status colors
   static const live = Color(0xFF00E676);
