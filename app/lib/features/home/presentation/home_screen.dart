@@ -74,6 +74,12 @@ class _QuickAccessBar extends StatelessWidget {
               highlight: true,
             ),
             _QuickChip(
+              icon: Icons.local_fire_department,
+              label: 'Streaks',
+              onTap: () => context.push('/streaks'),
+              highlight: true,
+            ),
+            _QuickChip(
               icon: Icons.account_tree,
               label: 'Bracket',
               onTap: () => context.push('/bracket'),
