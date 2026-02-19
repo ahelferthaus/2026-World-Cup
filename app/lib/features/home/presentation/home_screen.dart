@@ -68,6 +68,11 @@ class _QuickAccessBar extends StatelessWidget {
         child: Row(
           children: [
             _QuickChip(
+              icon: Icons.account_tree,
+              label: 'Bracket',
+              onTap: () => context.push('/bracket'),
+            ),
+            _QuickChip(
               icon: Icons.groups,
               label: 'Teams',
               onTap: () => context.push('/teams'),

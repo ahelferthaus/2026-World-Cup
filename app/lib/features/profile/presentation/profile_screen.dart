@@ -8,6 +8,7 @@ import '../../../core/data/demo_data.dart';
 import '../../../core/extensions/async_value_extensions.dart';
 import '../../../core/utils/token_formatter.dart';
 import '../../../core/widgets/app_loading_indicator.dart';
+import '../../../core/widgets/user_avatar.dart';
 import '../../auth/presentation/providers/auth_providers.dart';
 import '../../predict/presentation/providers/predict_providers.dart';
 import 'providers/profile_providers.dart';
@@ -45,18 +46,32 @@ class ProfileScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(AppSpacing.xl),
             child: Column(
               children: [
-                // Avatar + name
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                  child: Text(
-                    user.displayName.isNotEmpty
-                        ? user.displayName[0].toUpperCase()
-                        : '?',
-                    style: AppTextStyles.heading1.copyWith(
-                      color: AppColors.primary,
-                    ),
-                  ),
+                // Avatar + name (tap to change photo)
+                EditableUserAvatar(
+                  displayName: user.displayName,
+                  photoUrl: user.photoUrl,
+                  school: user.school,
+                  radius: 44,
+                  canGenerate: user.canGenerateAiPhoto,
+                  onUploadTap: () {
+                    // In production: use image_picker to select photo,
+                    // upload to Firebase Storage, save URL to Firestore
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Photo upload coming soon! (requires image_picker + Firebase Storage)'),
+                      ),
+                    );
+                  },
+                  onGenerateTap: () {
+                    // In production: call AI image API (DALL-E / Stability AI),
+                    // save result to Firebase Storage
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('AI avatar generation coming soon! (1x per week)'),
+                        backgroundColor: AppColors.secondary,
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(user.displayName, style: AppTextStyles.heading2),

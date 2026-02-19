@@ -15,6 +15,7 @@ import '../features/profile/presentation/prediction_history_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/propbets/presentation/prop_bets_screen.dart';
 import '../features/store/presentation/token_store_screen.dart';
+import '../features/bracket/presentation/bracket_screen.dart';
 import '../features/teams/presentation/teams_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -63,6 +64,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/propbets',
         builder: (_, __) => const PropBetsScreen(),
+      ),
+      GoRoute(
+        path: '/bracket',
+        builder: (_, __) => const BracketScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, __, navigationShell) {

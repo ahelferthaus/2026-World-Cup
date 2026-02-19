@@ -18,14 +18,14 @@ class AppTheme {
           onSecondary: AppColors.textOnPrimary,
           onSurface: AppColors.textPrimary,
         ),
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: AppColors.background,
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.textOnPrimary,
           elevation: 0,
           centerTitle: true,
         ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
           selectedItemColor: AppColors.primary,
           unselectedItemColor: AppColors.textSecondary,
@@ -35,10 +35,10 @@ class AppTheme {
           showSelectedLabels: true,
         ),
         cardTheme: CardThemeData(
-          elevation: 0,
+          elevation: 1,
+          shadowColor: AppColors.primary.withValues(alpha: 0.08),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-            side: BorderSide(color: AppColors.divider.withValues(alpha: 0.5)),
           ),
           color: Colors.white,
           margin: const EdgeInsets.symmetric(
@@ -75,10 +75,14 @@ class AppTheme {
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: AppColors.surface,
+          fillColor: Colors.white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSpacing.inputRadius),
-            borderSide: BorderSide.none,
+            borderSide: BorderSide(color: AppColors.divider),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.inputRadius),
+            borderSide: BorderSide(color: AppColors.divider),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(AppSpacing.inputRadius),
@@ -90,14 +94,15 @@ class AppTheme {
           ),
         ),
         chipTheme: ChipThemeData(
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.chipRadius),
           ),
         ),
         tabBarTheme: const TabBarThemeData(
-          labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.textSecondary,
-          indicatorColor: AppColors.primary,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
         ),
         dividerTheme: const DividerThemeData(
           color: AppColors.divider,

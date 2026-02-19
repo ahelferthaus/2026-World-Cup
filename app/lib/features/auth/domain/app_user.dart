@@ -9,6 +9,8 @@ class AppUser {
   final int totalWon;
   final int predictionsCount;
   final int predictionsWon;
+  final String? photoUrl;
+  final DateTime? lastAiPhotoGenerated;
   final DateTime? createdAt;
 
   const AppUser({
@@ -22,8 +24,15 @@ class AppUser {
     this.totalWon = 0,
     this.predictionsCount = 0,
     this.predictionsWon = 0,
+    this.photoUrl,
+    this.lastAiPhotoGenerated,
     this.createdAt,
   });
+
+  bool get canGenerateAiPhoto {
+    if (lastAiPhotoGenerated == null) return true;
+    return DateTime.now().difference(lastAiPhotoGenerated!).inDays >= 7;
+  }
 
   double get winRate =>
       predictionsCount > 0 ? predictionsWon / predictionsCount * 100 : 0;
@@ -47,6 +56,7 @@ class AppUser {
       totalWon: data['totalWon'] as int? ?? 0,
       predictionsCount: data['predictionsCount'] as int? ?? 0,
       predictionsWon: data['predictionsWon'] as int? ?? 0,
+      photoUrl: data['photoUrl'] as String?,
       createdAt: data['createdAt']?.toDate() ?? DateTime.now(),
     );
   }
@@ -63,6 +73,7 @@ class AppUser {
       totalWon: data['totalWon'] as int? ?? 180,
       predictionsCount: data['predictionsCount'] as int? ?? 12,
       predictionsWon: data['predictionsWon'] as int? ?? 7,
+      photoUrl: data['photoUrl'] as String?,
     );
   }
 }

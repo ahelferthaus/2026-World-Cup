@@ -425,4 +425,54 @@ class DemoData {
     {'id': 'pack_1200', 'tokens': 1200, 'price': 7.99, 'label': 'Baller Pack', 'popular': false},
     {'id': 'pack_3000', 'tokens': 3000, 'price': 14.99, 'label': 'Legend Pack', 'popular': false},
   ];
+
+  // ---------------------------------------------------------------------------
+  // Tournament Bracket
+  // ---------------------------------------------------------------------------
+  static Map<String, dynamic> get bracket => {
+    'round16': [
+      _bracketMatch('R16-1', 'United States', 'https://media.api-sports.io/football/teams/2384.png', 'England', 'https://media.api-sports.io/football/teams/10.png', 2, 1, true),
+      _bracketMatch('R16-2', 'Brazil', 'https://media.api-sports.io/football/teams/6.png', 'Netherlands', 'https://media.api-sports.io/football/teams/1118.png', 3, 0, true),
+      _bracketMatch('R16-3', 'France', 'https://media.api-sports.io/football/teams/2.png', 'Mexico', 'https://media.api-sports.io/football/teams/2385.png', 2, 1, true),
+      _bracketMatch('R16-4', 'Spain', 'https://media.api-sports.io/football/teams/9.png', 'Argentina', 'https://media.api-sports.io/football/teams/26.png', 1, 1, true, penaltyHome: 4, penaltyAway: 3),
+      _bracketMatch('R16-5', 'Germany', 'https://media.api-sports.io/football/teams/25.png', 'Portugal', 'https://media.api-sports.io/football/teams/27.png', 0, 2, true),
+      _bracketMatch('R16-6', 'Japan', 'https://media.api-sports.io/football/teams/12.png', 'Colombia', 'https://media.api-sports.io/football/teams/1066.png', 1, 0, true),
+      _bracketMatch('R16-7', 'Canada', 'https://media.api-sports.io/football/teams/5529.png', 'South Korea', 'https://media.api-sports.io/football/teams/17.png', 2, 2, true, penaltyHome: 5, penaltyAway: 4),
+      _bracketMatch('R16-8', 'Morocco', 'https://media.api-sports.io/football/teams/31.png', 'Saudi Arabia', 'https://media.api-sports.io/football/teams/23.png', 3, 1, true),
+    ],
+    'quarter': [
+      _bracketMatch('QF-1', 'United States', 'https://media.api-sports.io/football/teams/2384.png', 'Brazil', 'https://media.api-sports.io/football/teams/6.png', 1, 2, true),
+      _bracketMatch('QF-2', 'France', 'https://media.api-sports.io/football/teams/2.png', 'Spain', 'https://media.api-sports.io/football/teams/9.png', 2, 0, true),
+      _bracketMatch('QF-3', 'Portugal', 'https://media.api-sports.io/football/teams/27.png', 'Japan', 'https://media.api-sports.io/football/teams/12.png', 3, 1, true),
+      _bracketMatch('QF-4', 'Canada', 'https://media.api-sports.io/football/teams/5529.png', 'Morocco', 'https://media.api-sports.io/football/teams/31.png', 0, 1, true),
+    ],
+    'semi': [
+      _bracketMatch('SF-1', 'Brazil', 'https://media.api-sports.io/football/teams/6.png', 'France', 'https://media.api-sports.io/football/teams/2.png', null, null, false),
+      _bracketMatch('SF-2', 'Portugal', 'https://media.api-sports.io/football/teams/27.png', 'Morocco', 'https://media.api-sports.io/football/teams/31.png', null, null, false),
+    ],
+    'final': [
+      _bracketMatch('F', 'TBD', '', 'TBD', '', null, null, false),
+    ],
+  };
+
+  static Map<String, dynamic> _bracketMatch(
+    String id,
+    String home, String homeLogo,
+    String away, String awayLogo,
+    int? scoreHome, int? scoreAway,
+    bool played, {
+    int? penaltyHome,
+    int? penaltyAway,
+  }) => {
+    'id': id,
+    'home': home,
+    'homeLogo': homeLogo,
+    'away': away,
+    'awayLogo': awayLogo,
+    'scoreHome': scoreHome,
+    'scoreAway': scoreAway,
+    'played': played,
+    'penaltyHome': penaltyHome,
+    'penaltyAway': penaltyAway,
+  };
 }
