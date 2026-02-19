@@ -148,16 +148,16 @@ class DemoData {
   // Leaderboards (Global)
   // ---------------------------------------------------------------------------
   static List<Map<String, dynamic>> get leaderboardGlobal => [
-    {'uid': 'demo_1', 'displayName': 'SoccerKing99', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 487, 'rank': 1, 'winRate': 72.0, 'boldness': 85.0},
+    {'uid': 'demo_1', 'displayName': 'SoccerKing99', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 487, 'rank': 1, 'winRate': 72.0, 'boldness': 85.0},
     {'uid': 'demo_2', 'displayName': 'GoalMaster', 'school': 'Fairview High School', 'state': 'Colorado', 'tokens': 412, 'rank': 2, 'winRate': 65.0, 'boldness': 60.0},
-    {'uid': 'demo_3', 'displayName': 'PredictPro', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 385, 'rank': 3, 'winRate': 61.0, 'boldness': 55.0},
-    {'uid': 'demo_user', 'displayName': 'You', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 320, 'rank': 4, 'winRate': 58.0, 'boldness': 70.0},
+    {'uid': 'demo_3', 'displayName': 'PredictPro', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 385, 'rank': 3, 'winRate': 61.0, 'boldness': 55.0},
+    {'uid': 'demo_user', 'displayName': 'You', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 320, 'rank': 4, 'winRate': 58.0, 'boldness': 70.0},
     {'uid': 'demo_5', 'displayName': 'FutbolFan', 'school': 'Boulder High School', 'state': 'Colorado', 'tokens': 298, 'rank': 5, 'winRate': 55.0, 'boldness': 45.0},
     {'uid': 'demo_6', 'displayName': 'WorldCup26', 'school': 'Monarch High School', 'state': 'Colorado', 'tokens': 275, 'rank': 6, 'winRate': 52.0, 'boldness': 50.0},
-    {'uid': 'demo_7', 'displayName': 'ScoreHunter', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 250, 'rank': 7, 'winRate': 48.0, 'boldness': 90.0},
+    {'uid': 'demo_7', 'displayName': 'ScoreHunter', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 250, 'rank': 7, 'winRate': 48.0, 'boldness': 90.0},
     {'uid': 'demo_8', 'displayName': 'MatchDay', 'school': 'Broomfield High School', 'state': 'Colorado', 'tokens': 230, 'rank': 8, 'winRate': 46.0, 'boldness': 40.0},
     {'uid': 'demo_9', 'displayName': 'TopBins', 'school': 'Legacy High School', 'state': 'Colorado', 'tokens': 210, 'rank': 9, 'winRate': 43.0, 'boldness': 35.0},
-    {'uid': 'demo_10', 'displayName': 'Golazoo', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 195, 'rank': 10, 'winRate': 40.0, 'boldness': 30.0},
+    {'uid': 'demo_10', 'displayName': 'Golazoo', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 195, 'rank': 10, 'winRate': 40.0, 'boldness': 30.0},
     {'uid': 'demo_11', 'displayName': 'TXKicker', 'school': 'Highland Park High School', 'state': 'Texas', 'tokens': 510, 'rank': 0, 'winRate': 75.0, 'boldness': 80.0},
     {'uid': 'demo_12', 'displayName': 'NYCGoals', 'school': 'Stuyvesant High School', 'state': 'New York', 'tokens': 460, 'rank': 0, 'winRate': 70.0, 'boldness': 65.0},
     {'uid': 'demo_13', 'displayName': 'SunshineFC', 'school': 'Pine Crest School', 'state': 'Florida', 'tokens': 440, 'rank': 0, 'winRate': 68.0, 'boldness': 55.0},
@@ -165,11 +165,11 @@ class DemoData {
   ];
 
   static List<Map<String, dynamic>> get leaderboardSchool => [
-    {'uid': 'demo_1', 'displayName': 'SoccerKing99', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 487, 'rank': 1},
-    {'uid': 'demo_3', 'displayName': 'PredictPro', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 385, 'rank': 2},
-    {'uid': 'demo_user', 'displayName': 'You', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 320, 'rank': 3},
-    {'uid': 'demo_7', 'displayName': 'ScoreHunter', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 250, 'rank': 4},
-    {'uid': 'demo_10', 'displayName': 'Golazoo', 'school': 'Centaurus High School', 'state': 'Colorado', 'tokens': 195, 'rank': 5},
+    {'uid': 'demo_1', 'displayName': 'SoccerKing99', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 487, 'rank': 1},
+    {'uid': 'demo_3', 'displayName': 'PredictPro', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 385, 'rank': 2},
+    {'uid': 'demo_user', 'displayName': 'You', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 320, 'rank': 3},
+    {'uid': 'demo_7', 'displayName': 'ScoreHunter', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 250, 'rank': 4},
+    {'uid': 'demo_10', 'displayName': 'Golazoo', 'school': 'Demo High School', 'state': 'Colorado', 'tokens': 195, 'rank': 5},
   ];
 
   // ---------------------------------------------------------------------------
@@ -177,7 +177,7 @@ class DemoData {
   // ---------------------------------------------------------------------------
   static List<Map<String, dynamic>> get schoolAggregates => [
     {'school': 'Highland Park High School', 'state': 'Texas', 'totalTokens': 2150, 'avgWinRate': 68.5, 'avgBoldness': 72.0, 'playerCount': 8, 'rank': 1},
-    {'school': 'Centaurus High School', 'state': 'Colorado', 'totalTokens': 1837, 'avgWinRate': 58.2, 'avgBoldness': 66.0, 'playerCount': 5, 'rank': 2},
+    {'school': 'Demo High School', 'state': 'Colorado', 'totalTokens': 1837, 'avgWinRate': 58.2, 'avgBoldness': 66.0, 'playerCount': 5, 'rank': 2},
     {'school': 'Stuyvesant High School', 'state': 'New York', 'totalTokens': 1680, 'avgWinRate': 62.3, 'avgBoldness': 55.0, 'playerCount': 6, 'rank': 3},
     {'school': 'Pine Crest School', 'state': 'Florida', 'totalTokens': 1540, 'avgWinRate': 60.1, 'avgBoldness': 48.0, 'playerCount': 5, 'rank': 4},
     {'school': 'Palo Alto High School', 'state': 'California', 'totalTokens': 1420, 'avgWinRate': 57.8, 'avgBoldness': 62.0, 'playerCount': 4, 'rank': 5},
@@ -203,7 +203,7 @@ class DemoData {
   static Map<String, dynamic> get userProfile => {
     'uid': 'demo_user',
     'displayName': 'DemoPlayer',
-    'school': 'Centaurus High School',
+    'school': 'Demo High School',
     'state': 'Colorado',
     'grade': 'Junior (11th)',
     'tokens': 320,
@@ -391,7 +391,7 @@ class DemoData {
       'category': 'stats',
     },
     {
-      'title': 'World Cup 2026: Full schedule, venues, and bracket explained',
+      'title': 'World Cup: Full schedule, venues, and bracket explained',
       'source': 'The Athletic',
       'url': 'https://theathletic.com',
       'imageUrl': null,

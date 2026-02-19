@@ -27,9 +27,10 @@ final schoolLeaderboardProvider = FutureProvider<List<LeaderboardEntry>>((ref) a
   final idToken = await ref.watch(idTokenProvider.future);
   if (idToken == null) return [];
 
+  // TODO: read school from user profile dynamically
   return ref
       .read(leaderboardRepositoryProvider)
-      .fetchSchoolLeaderboard(idToken, 'Centaurus High School');
+      .fetchSchoolLeaderboard(idToken, 'Demo High School');
 });
 
 final schoolAggregatesProvider = FutureProvider<List<AggregateEntry>>((ref) async {

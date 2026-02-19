@@ -13,7 +13,7 @@ class NewsScreen extends StatelessWidget {
     final news = DemoData.newsFeed;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('World Cup News')),
+      appBar: AppBar(title: const Text('Sports News')),
       body: ListView.separated(
         padding: const EdgeInsets.all(AppSpacing.lg),
         itemCount: news.length,

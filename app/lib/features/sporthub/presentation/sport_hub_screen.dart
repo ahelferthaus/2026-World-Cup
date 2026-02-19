@@ -3,75 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
+import '../../../core/data/demo_data.dart';
 import '../../../core/widgets/animated_background.dart';
+import '../../../core/widgets/glassmorphic_card.dart';
+import '../../../core/widgets/gradient_button.dart';
+import '../data/sport_hub_data.dart';
 
 /// The multi-sport hub — the app's front door for selecting a sport.
-/// Uses animated backgrounds and glassmorphic cards for Stadium Live-quality UI.
+/// Uses animated backgrounds, player headshots, and glassmorphic cards.
 class SportHubScreen extends StatelessWidget {
   const SportHubScreen({super.key});
-
-  static const _sports = <_SportEntry>[
-    _SportEntry(
-      id: 'worldcup',
-      name: 'FIFA World Cup',
-      subtitle: '2026 \u2022 USA/MEX/CAN',
-      emoji: '\u26BD',
-      route: '/home',
-      gradientColors: [Color(0xFF00C853), Color(0xFF1B5E20)],
-      isLive: true,
-      badge: 'LIVE NOW',
-    ),
-    _SportEntry(
-      id: 'nba',
-      name: 'NBA Playoffs',
-      subtitle: '2026 \u2022 Round 1',
-      emoji: '\u{1F3C0}',
-      route: '/nba',
-      gradientColors: [Color(0xFFF37321), Color(0xFF1D428A)],
-      isLive: true,
-      badge: 'GAME TONIGHT',
-    ),
-    _SportEntry(
-      id: 'nfl',
-      name: 'NFL',
-      subtitle: 'Coming Fall 2026',
-      emoji: '\u{1F3C8}',
-      route: '',
-      gradientColors: [Color(0xFF013369), Color(0xFFD50A0A)],
-      isLive: false,
-      badge: 'COMING SOON',
-    ),
-    _SportEntry(
-      id: 'mlb',
-      name: 'MLB',
-      subtitle: 'Coming Summer 2026',
-      emoji: '\u26BE',
-      route: '',
-      gradientColors: [Color(0xFF002D72), Color(0xFFCE1141)],
-      isLive: false,
-      badge: 'COMING SOON',
-    ),
-    _SportEntry(
-      id: 'ufc',
-      name: 'UFC/MMA',
-      subtitle: 'Coming 2026',
-      emoji: '\u{1F94A}',
-      route: '',
-      gradientColors: [Color(0xFFD20A0A), Color(0xFF1A1A1A)],
-      isLive: false,
-      badge: 'COMING SOON',
-    ),
-    _SportEntry(
-      id: 'esports',
-      name: 'Esports',
-      subtitle: 'Coming 2026',
-      emoji: '\u{1F3AE}',
-      route: '',
-      gradientColors: [Color(0xFF7C4DFF), Color(0xFF00E5FF)],
-      isLive: false,
-      badge: 'COMING SOON',
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -86,21 +27,30 @@ class SportHubScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.xl, AppSpacing.xl, AppSpacing.xl, AppSpacing.md,
+                    AppSpacing.xl, AppSpacing.xl, AppSpacing.xl, AppSpacing.sm,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'PICK YOUR GAME',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 28,
-                          color: AppColors.textPrimary,
-                          letterSpacing: 1,
-                          height: 1.1,
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            '\u{1FA99}',
+                            style: TextStyle(fontSize: 28),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          const Text(
+                            'PICK YOUR GAME',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 26,
+                              color: AppColors.textPrimary,
+                              letterSpacing: 1,
+                              height: 1.1,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
@@ -114,21 +64,32 @@ class SportHubScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // Featured Matchup Banner
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+                  child: _FeaturedMatchupBanner(),
+                ),
+              ),
+
               // Sport cards grid
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
                 sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: AppSpacing.md,
                     crossAxisSpacing: AppSpacing.md,
-                    childAspectRatio: 0.85,
+                    childAspectRatio: 0.72,
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      return _SportCard(sport: _sports[index]);
+                      return _SportCard(sport: SportHubData.sports[index]);
                     },
-                    childCount: _sports.length,
+                    childCount: SportHubData.sports.length,
                   ),
                 ),
               ),
@@ -144,14 +105,210 @@ class SportHubScreen extends StatelessWidget {
 }
 
 // ---------------------------------------------------------------------------
-// Sport Card — glassmorphic card with gradient, emoji, and live badge
+// Featured Matchup Banner — tonight's biggest game
+// ---------------------------------------------------------------------------
+class _FeaturedMatchupBanner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Grab the first live match from demo data
+    final match = DemoData.matches.firstWhere(
+      (m) => m['status'] == '2H' || m['status'] == '1H',
+      orElse: () => DemoData.matches.first,
+    );
+    final home = match['homeTeam'] as Map<String, dynamic>;
+    final away = match['awayTeam'] as Map<String, dynamic>;
+    final isLive = match['status'] == '2H' || match['status'] == '1H';
+
+    return GlassmorphicCard(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      gradient: LinearGradient(
+        colors: [
+          AppColors.primary.withValues(alpha: 0.15),
+          AppColors.accent.withValues(alpha: 0.08),
+        ],
+      ),
+      child: Column(
+        children: [
+          // "FEATURED MATCHUP" header
+          Row(
+            children: [
+              if (isLive)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  margin: const EdgeInsets.only(right: AppSpacing.sm),
+                  decoration: BoxDecoration(
+                    color: AppColors.live.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration: const BoxDecoration(
+                          color: AppColors.live,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Text(
+                        'LIVE',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 9,
+                          color: AppColors.live,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              Text(
+                'FEATURED MATCHUP',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
+                  letterSpacing: 1,
+                  color: AppColors.textMuted,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // Team vs Team
+          Row(
+            children: [
+              // Home team
+              Expanded(
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        home['logo'] as String,
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) =>
+                            const Text('\u26BD', style: TextStyle(fontSize: 36)),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      home['name'] as String,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+
+              // Score / VS
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                child: isLive
+                    ? Column(
+                        children: [
+                          Text(
+                            '${match['homeScore']} - ${match['awayScore']}',
+                            style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w800,
+                              fontSize: 28,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          Text(
+                            "${match['elapsed']}'",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.live,
+                            ),
+                          ),
+                        ],
+                      )
+                    : const Text(
+                        'VS',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 24,
+                          color: AppColors.textMuted,
+                        ),
+                      ),
+              ),
+
+              // Away team
+              Expanded(
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        away['logo'] as String,
+                        width: 48,
+                        height: 48,
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) =>
+                            const Text('\u26BD', style: TextStyle(fontSize: 36)),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      away['name'] as String,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // Predict Now button
+          SizedBox(
+            width: double.infinity,
+            child: GradientButton(
+              label: 'PREDICT NOW',
+              onPressed: () => context.push('/predict'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Sport Card — rich imagery with player headshots
 // ---------------------------------------------------------------------------
 class _SportCard extends StatelessWidget {
   const _SportCard({required this.sport});
-  final _SportEntry sport;
+  final SportConfig sport;
 
   @override
   Widget build(BuildContext context) {
+    final hasPlayers = sport.featuredPlayers.isNotEmpty &&
+        sport.featuredPlayers.first.imageUrl.isNotEmpty;
+
     return GestureDetector(
       onTap: sport.route.isNotEmpty
           ? () => context.push(sport.route)
@@ -174,131 +331,230 @@ class _SportCard extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: sport.isLive
-                      ? [
-                          sport.gradientColors.first.withValues(alpha: 0.25),
-                          sport.gradientColors.last.withValues(alpha: 0.1),
-                          Colors.white.withValues(alpha: 0.03),
-                        ]
-                      : [
-                          Colors.white.withValues(alpha: 0.06),
-                          Colors.white.withValues(alpha: 0.02),
-                        ],
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // Background gradient
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: sport.isLive
+                        ? [
+                            sport.gradientColors.first.withValues(alpha: 0.35),
+                            sport.gradientColors.last.withValues(alpha: 0.15),
+                            AppColors.background.withValues(alpha: 0.8),
+                          ]
+                        : [
+                            Colors.white.withValues(alpha: 0.06),
+                            Colors.white.withValues(alpha: 0.02),
+                          ],
+                  ),
                 ),
               ),
-              child: Stack(
-                children: [
-                  // Background emoji (large, faded)
-                  Positioned(
-                    right: -10,
-                    bottom: -10,
-                    child: Opacity(
-                      opacity: sport.isLive ? 0.15 : 0.06,
-                      child: Text(
-                        sport.emoji,
-                        style: const TextStyle(fontSize: 80),
+
+              // Player headshot (hero image) — top portion
+              if (hasPlayers)
+                Positioned(
+                  top: -5,
+                  right: -15,
+                  child: Opacity(
+                    opacity: sport.isLive ? 0.7 : 0.3,
+                    child: Image.network(
+                      sport.featuredPlayers.first.imageUrl,
+                      height: 130,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                      errorBuilder: (_, __, ___) => Opacity(
+                        opacity: 0.15,
+                        child: Text(
+                          sport.emoji,
+                          style: const TextStyle(fontSize: 80),
+                        ),
                       ),
                     ),
                   ),
-                  // Content
-                  Padding(
-                    padding: const EdgeInsets.all(AppSpacing.lg),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Badge
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 3,
-                          ),
-                          decoration: BoxDecoration(
-                            color: sport.isLive
-                                ? AppColors.success.withValues(alpha: 0.2)
-                                : AppColors.surfaceLight,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            sport.badge,
+                )
+              else
+                // Fallback: large faded emoji
+                Positioned(
+                  right: -10,
+                  top: -5,
+                  child: Opacity(
+                    opacity: sport.isLive ? 0.15 : 0.06,
+                    child: Text(
+                      sport.emoji,
+                      style: const TextStyle(fontSize: 80),
+                    ),
+                  ),
+                ),
+
+              // Glassmorphic bottom overlay with content
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(AppSpacing.cardRadius)),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                    child: Container(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppColors.background.withValues(alpha: 0.3),
+                            AppColors.background.withValues(alpha: 0.85),
+                          ],
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Sport name
+                          Text(
+                            sport.name,
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
-                              fontSize: 9,
-                              letterSpacing: 0.5,
+                              fontSize: 16,
                               color: sport.isLive
-                                  ? AppColors.success
+                                  ? AppColors.textPrimary
                                   : AppColors.textMuted,
                             ),
                           ),
-                        ),
-                        const Spacer(),
-                        // Emoji
-                        Text(
-                          sport.emoji,
-                          style: const TextStyle(fontSize: 36),
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        // Name
-                        Text(
-                          sport.name,
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: sport.isLive
-                                ? AppColors.textPrimary
-                                : AppColors.textMuted,
+                          Text(
+                            sport.subtitle,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: sport.isLive
+                                  ? AppColors.textSecondary
+                                  : AppColors.textMuted,
+                            ),
                           ),
-                        ),
-                        Text(
-                          sport.subtitle,
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: sport.isLive
-                                ? AppColors.textSecondary
-                                : AppColors.textMuted,
+
+                          // Mini player avatar row
+                          if (sport.featuredPlayers.isNotEmpty &&
+                              sport.isLive) ...[
+                            const SizedBox(height: AppSpacing.sm),
+                            Row(
+                              children: [
+                                // Player circles
+                                ...sport.featuredPlayers.take(3).map((p) {
+                                  return Container(
+                                    margin:
+                                        const EdgeInsets.only(right: 4),
+                                    child: CircleAvatar(
+                                      radius: 12,
+                                      backgroundColor: sport
+                                          .gradientColors.first
+                                          .withValues(alpha: 0.3),
+                                      child: p.imageUrl.isNotEmpty
+                                          ? ClipOval(
+                                              child: Image.network(
+                                                p.imageUrl,
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.cover,
+                                                errorBuilder:
+                                                    (_, __, ___) => Text(
+                                                  p.name[0],
+                                                  style: const TextStyle(
+                                                    fontSize: 10,
+                                                    fontWeight:
+                                                        FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : Text(
+                                              p.name[0],
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w700,
+                                                color:
+                                                    AppColors.textSecondary,
+                                              ),
+                                            ),
+                                    ),
+                                  );
+                                }),
+                                const SizedBox(width: 4),
+                                Text(
+                                  sport.featuredPlayers
+                                      .take(3)
+                                      .map((p) => p.name)
+                                      .join(', '),
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    color: AppColors.textMuted,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Badge (top-right)
+              Positioned(
+                top: AppSpacing.sm,
+                left: AppSpacing.sm,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    color: sport.isLive
+                        ? AppColors.success.withValues(alpha: 0.2)
+                        : AppColors.surfaceLight,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (sport.isLive) ...[
+                        Container(
+                          width: 5,
+                          height: 5,
+                          margin: const EdgeInsets.only(right: 4),
+                          decoration: const BoxDecoration(
+                            color: AppColors.success,
+                            shape: BoxShape.circle,
                           ),
                         ),
                       ],
-                    ),
+                      Text(
+                        sport.badge,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 9,
+                          letterSpacing: 0.5,
+                          color: sport.isLive
+                              ? AppColors.success
+                              : AppColors.textMuted,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-// ---------------------------------------------------------------------------
-// Data model
-// ---------------------------------------------------------------------------
-class _SportEntry {
-  final String id;
-  final String name;
-  final String subtitle;
-  final String emoji;
-  final String route;
-  final List<Color> gradientColors;
-  final bool isLive;
-  final String badge;
-
-  const _SportEntry({
-    required this.id,
-    required this.name,
-    required this.subtitle,
-    required this.emoji,
-    required this.route,
-    required this.gradientColors,
-    required this.isLive,
-    required this.badge,
-  });
 }

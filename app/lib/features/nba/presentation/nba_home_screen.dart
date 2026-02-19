@@ -185,7 +185,7 @@ class _HeroBanner extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 const Text(
-                  '2026 NBA Playoffs',
+                  'NBA Playoffs',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w800,

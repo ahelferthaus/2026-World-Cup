@@ -214,7 +214,7 @@ class ProfileScreen extends ConsumerWidget {
                 ),
                 _ActionTile(
                   icon: Icons.newspaper,
-                  label: 'World Cup News',
+                  label: 'Sports News',
                   onTap: () => context.push('/news'),
                 ),
                 const Divider(height: AppSpacing.xl),

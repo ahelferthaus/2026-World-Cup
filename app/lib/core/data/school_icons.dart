@@ -32,8 +32,8 @@ class SchoolIcons {
   // Map of school names to actual known logo URLs
   // These would be real CDN URLs in production
   static final Map<String, String> _knownLogos = {
-    'Centaurus High School':
-        'https://ui-avatars.com/api/?name=CH&background=1565C0&color=fff&size=128&bold=true&format=png',
+    'Demo High School':
+        'https://ui-avatars.com/api/?name=DH&background=6C5CE7&color=fff&size=128&bold=true&format=png',
     'Fairview High School':
         'https://ui-avatars.com/api/?name=FH&background=00695C&color=fff&size=128&bold=true&format=png',
     'Boulder High School':

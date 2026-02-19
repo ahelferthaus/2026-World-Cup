@@ -155,7 +155,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                         ),
                       ),
                       child: const Center(
-                        child: Text('\u26BD', style: TextStyle(fontSize: 56)),
+                        child: Text('\u{1FA99}', style: TextStyle(fontSize: 56)),
                       ),
                     ),
                   ),
@@ -166,7 +166,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                       colors: [AppColors.textPrimary, AppColors.primaryLight],
                     ).createShader(bounds),
                     child: Text(
-                      '2026 WORLD CUP',
+                      "POKIN' TOKENS",
                       style: AppTextStyles.heading1.copyWith(
                         color: Colors.white,
                         letterSpacing: 2,
