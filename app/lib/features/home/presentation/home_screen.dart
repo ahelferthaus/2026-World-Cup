@@ -68,6 +68,12 @@ class _QuickAccessBar extends StatelessWidget {
         child: Row(
           children: [
             _QuickChip(
+              icon: Icons.play_circle_fill,
+              label: 'Live Game',
+              onTap: () => context.push('/live/1'),
+              highlight: true,
+            ),
+            _QuickChip(
               icon: Icons.account_tree,
               label: 'Bracket',
               onTap: () => context.push('/bracket'),
@@ -121,19 +127,19 @@ class _QuickChip extends StatelessWidget {
         avatar: Icon(
           icon,
           size: 16,
-          color: highlight ? AppColors.secondary : AppColors.primary,
+          color: highlight ? AppColors.accent : AppColors.primaryLight,
         ),
         label: Text(
           label,
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w500,
-            color: highlight ? AppColors.secondary : null,
+            color: highlight ? AppColors.accent : AppColors.textPrimary,
           ),
         ),
         onPressed: onTap,
         side: highlight
-            ? const BorderSide(color: AppColors.secondary)
+            ? const BorderSide(color: AppColors.accent)
             : null,
       ),
     );

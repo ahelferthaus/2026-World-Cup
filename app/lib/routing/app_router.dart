@@ -16,6 +16,7 @@ import '../features/profile/presentation/profile_screen.dart';
 import '../features/propbets/presentation/prop_bets_screen.dart';
 import '../features/store/presentation/token_store_screen.dart';
 import '../features/bracket/presentation/bracket_screen.dart';
+import '../features/livegame/presentation/live_game_screen.dart';
 import '../features/teams/presentation/teams_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -68,6 +69,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/bracket',
         builder: (_, __) => const BracketScreen(),
+      ),
+      GoRoute(
+        path: '/live/:matchId',
+        builder: (_, state) => LiveGameScreen(
+          matchId: state.pathParameters['matchId'] ?? '1',
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, __, navigationShell) {

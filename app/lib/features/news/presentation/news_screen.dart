@@ -115,7 +115,7 @@ class _NewsCard extends StatelessWidget {
                         const SizedBox(width: AppSpacing.sm),
                         Text(
                           DateFormatter.relativeTime(publishedAt),
-                          style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+                          style: TextStyle(fontSize: 12, color: AppColors.textMuted),
                         ),
                       ],
                     ),
@@ -123,7 +123,7 @@ class _NewsCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              Icon(Icons.open_in_new, size: 16, color: Colors.grey.shade400),
+              Icon(Icons.open_in_new, size: 16, color: AppColors.textMuted),
             ],
           ),
         ),

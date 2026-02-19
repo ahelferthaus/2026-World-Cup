@@ -89,7 +89,7 @@ class _TeamsTab extends StatelessWidget {
         builder: (context, scrollController) => Column(
           children: [
             const SizedBox(height: AppSpacing.md),
-            Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+            Container(width: 40, height: 4, decoration: BoxDecoration(color: AppColors.divider, borderRadius: BorderRadius.circular(2))),
             Padding(
               padding: const EdgeInsets.all(AppSpacing.xl),
               child: Text('$teamName Squad', style: AppTextStyles.heading3),
@@ -158,7 +158,7 @@ class _PlayersTab extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('${p['goals']}', style: AppTextStyles.labelLarge.copyWith(color: AppColors.secondary)),
-                    const Text('G', style: TextStyle(fontSize: 10, color: Colors.grey)),
+                    const Text('G', style: TextStyle(fontSize: 10, color: AppColors.textMuted)),
                   ],
                 ),
                 const SizedBox(width: AppSpacing.md),
@@ -166,7 +166,7 @@ class _PlayersTab extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('${p['assists']}', style: AppTextStyles.labelLarge),
-                    const Text('A', style: TextStyle(fontSize: 10, color: Colors.grey)),
+                    const Text('A', style: TextStyle(fontSize: 10, color: AppColors.textMuted)),
                   ],
                 ),
               ],
@@ -208,7 +208,7 @@ class _GoldenBootTab extends StatelessWidget {
                   width: 32,
                   height: 32,
                   decoration: BoxDecoration(
-                    color: medalColor?.withValues(alpha: 0.2) ?? Colors.grey.shade100,
+                    color: medalColor?.withValues(alpha: 0.2) ?? AppColors.surfaceLight,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -216,7 +216,7 @@ class _GoldenBootTab extends StatelessWidget {
                       '$rank',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: medalColor ?? Colors.grey,
+                        color: medalColor ?? AppColors.textMuted,
                       ),
                     ),
                   ),
@@ -232,7 +232,7 @@ class _GoldenBootTab extends StatelessWidget {
                       ),
                       Text(
                         '${e['team']} | ${e['minutesPlayed']} min played',
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
                       ),
                     ],
                   ),
@@ -245,7 +245,7 @@ class _GoldenBootTab extends StatelessWidget {
                     ),
                     Text(
                       '${e['assists']} ast',
-                      style: const TextStyle(fontSize: 11, color: Colors.grey),
+                      style: const TextStyle(fontSize: 11, color: AppColors.textMuted),
                     ),
                   ],
                 ),

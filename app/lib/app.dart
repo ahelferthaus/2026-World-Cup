@@ -13,9 +13,9 @@ class WorldCupApp extends ConsumerWidget {
     return MaterialApp.router(
       title: '2026 World Cup',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
+      theme: AppTheme.dark,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       routerConfig: router,
     );
   }

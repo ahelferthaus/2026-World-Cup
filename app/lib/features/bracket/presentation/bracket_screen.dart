@@ -162,7 +162,7 @@ class _BracketMatchCard extends StatelessWidget {
     return Container(
       width: width,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surfaceCard,
         borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
         border: Border.all(
           color: isFinal
@@ -172,7 +172,7 @@ class _BracketMatchCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -244,7 +244,7 @@ class _TeamRow extends StatelessWidget {
               ),
             )
           else
-            const Icon(Icons.help_outline, size: 20, color: Colors.grey),
+            Icon(Icons.help_outline, size: 20, color: AppColors.textMuted),
           const SizedBox(width: 6),
           // Team name
           Expanded(
@@ -255,10 +255,10 @@ class _TeamRow extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: isWinner ? FontWeight.w700 : FontWeight.w400,
                 color: !played && name == 'TBD'
-                    ? Colors.grey
+                    ? AppColors.textMuted
                     : isWinner
                         ? AppColors.bracketWinner
-                        : null,
+                        : AppColors.textPrimary,
               ),
               overflow: TextOverflow.ellipsis,
             ),
@@ -271,7 +271,7 @@ class _TeamRow extends StatelessWidget {
                 fontFamily: 'Poppins',
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: isWinner ? AppColors.bracketWinner : Colors.grey.shade600,
+                color: isWinner ? AppColors.bracketWinner : AppColors.textSecondary,
               ),
             ),
             if (penaltyScore != null)
@@ -279,7 +279,7 @@ class _TeamRow extends StatelessWidget {
                 ' ($penaltyScore)',
                 style: TextStyle(
                   fontSize: 10,
-                  color: Colors.grey.shade500,
+                  color: AppColors.textMuted,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -289,7 +289,7 @@ class _TeamRow extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontSize: 13,
-                color: Colors.grey.shade400,
+                color: AppColors.textMuted,
               ),
             ),
         ],

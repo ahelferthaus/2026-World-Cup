@@ -102,7 +102,7 @@ class EditableUserAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.primary,
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(color: AppColors.background, width: 2),
               ),
               child: const Icon(
                 Icons.camera_alt,
@@ -132,7 +132,7 @@ class EditableUserAvatar extends StatelessWidget {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: AppColors.divider,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -159,7 +159,7 @@ class EditableUserAvatar extends StatelessWidget {
                 ListTile(
                   leading: Icon(
                     Icons.auto_awesome,
-                    color: canGenerate ? AppColors.secondary : Colors.grey,
+                    color: canGenerate ? AppColors.secondary : AppColors.textMuted,
                   ),
                   title: const Text('Generate AI Avatar'),
                   subtitle: Text(

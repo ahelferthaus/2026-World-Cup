@@ -124,7 +124,7 @@ class _PredictionFormState extends ConsumerState<PredictionForm> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: AppColors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),

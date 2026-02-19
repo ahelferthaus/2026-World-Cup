@@ -186,7 +186,7 @@ class _BettingLinesExplainerState extends State<_BettingLinesExplainer> {
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: AppColors.primary),
           ),
           const SizedBox(height: 2),
-          Text(desc, style: const TextStyle(fontSize: 11, color: Colors.grey, height: 1.4)),
+          Text(desc, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary, height: 1.4)),
         ],
       ),
     );
@@ -293,7 +293,7 @@ class _AllInRoosterDialog extends StatelessWidget {
           Text(
             'You\'re about to go ALL IN with all $tokens tokens on a single prediction.',
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.grey, fontSize: 13, height: 1.4),
+            style: const TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.4),
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
@@ -304,7 +304,7 @@ class _AllInRoosterDialog extends StatelessWidget {
           const Text(
             'Pick a match above, then bet everything.\nNo guts, no glory!',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, color: Colors.grey),
+            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.xl),
           Row(
@@ -391,12 +391,12 @@ class _OddsRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: AppColors.surfaceLight,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 'O/U ${overUnder.toStringAsFixed(1)}',
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Colors.grey),
+                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: AppColors.textSecondary),
               ),
             ),
         ],
@@ -422,8 +422,8 @@ class _OddsChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: isFavorite
-            ? AppColors.primary.withValues(alpha: 0.08)
-            : Colors.grey.shade100,
+            ? AppColors.primary.withValues(alpha: 0.15)
+            : AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(8),
         border: isFavorite
             ? Border.all(color: AppColors.primary.withValues(alpha: 0.3))
@@ -437,7 +437,7 @@ class _OddsChip extends StatelessWidget {
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w500,
-              color: isFavorite ? AppColors.primary : Colors.grey.shade600,
+              color: isFavorite ? AppColors.primaryLight : AppColors.textSecondary,
             ),
           ),
           const SizedBox(width: 4),
@@ -446,7 +446,7 @@ class _OddsChip extends StatelessWidget {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: isFavorite ? AppColors.primary : Colors.black87,
+              color: isFavorite ? AppColors.primary : AppColors.textPrimary,
             ),
           ),
         ],

@@ -28,7 +28,7 @@ class GradientButton extends StatelessWidget {
                 end: Alignment.centerRight,
               )
             : null,
-        color: onPressed == null ? Colors.grey.shade400 : null,
+        color: onPressed == null ? AppColors.surfaceLight : null,
         borderRadius: BorderRadius.circular(AppSpacing.buttonRadius),
       ),
       child: Material(

@@ -26,7 +26,7 @@ class _PlayerDetailContent extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(width: 40, height: 4, decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(2))),
+          Container(width: 40, height: 4, decoration: BoxDecoration(color: AppColors.divider, borderRadius: BorderRadius.circular(2))),
           const SizedBox(height: AppSpacing.xl),
           CircleAvatar(
             radius: 36,
@@ -41,7 +41,7 @@ class _PlayerDetailContent extends StatelessWidget {
           const SizedBox(height: AppSpacing.xs),
           Text(
             '${player['team']} | ${player['position']} | Age ${player['age']}',
-            style: AppTextStyles.bodyMedium.copyWith(color: Colors.grey),
+            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
           ),
           const SizedBox(height: AppSpacing.xl),
           // Stats row
@@ -99,7 +99,7 @@ class _StatBubble extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.xs),
-        Text(label, style: AppTextStyles.bodySmall.copyWith(color: Colors.grey)),
+        Text(label, style: AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted)),
       ],
     );
   }

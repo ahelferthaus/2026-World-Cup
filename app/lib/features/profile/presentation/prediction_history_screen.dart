@@ -99,14 +99,14 @@ class _PredictionTile extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 12,
-                    color: Colors.grey.shade600,
+                    color: AppColors.textSecondary,
                   ),
                 ),
                 Text(
                   DateFormatter.relativeTime(prediction.createdAt),
                   style: TextStyle(
                     fontSize: 11,
-                    color: Colors.grey.shade400,
+                    color: AppColors.textMuted,
                   ),
                 ),
               ],
@@ -136,7 +136,7 @@ class _PredictionTile extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
-                color: Colors.grey.shade500,
+                color: AppColors.textMuted,
               ),
             ),
         ],

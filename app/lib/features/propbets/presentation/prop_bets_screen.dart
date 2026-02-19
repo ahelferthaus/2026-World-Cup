@@ -54,11 +54,11 @@ class _MyBetsTab extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.handshake_outlined, size: 64, color: Colors.grey.shade300),
+            Icon(Icons.handshake_outlined, size: 64, color: AppColors.textMuted),
             const SizedBox(height: AppSpacing.md),
-            Text('No prop bets yet', style: AppTextStyles.heading3.copyWith(color: Colors.grey)),
+            Text('No prop bets yet', style: AppTextStyles.heading3.copyWith(color: AppColors.textSecondary)),
             const SizedBox(height: AppSpacing.xs),
-            const Text('Challenge a friend to a bet!', style: TextStyle(color: Colors.grey)),
+            const Text('Challenge a friend to a bet!', style: TextStyle(color: AppColors.textSecondary)),
           ],
         ),
       );
@@ -87,7 +87,7 @@ class _MyBetsTab extends StatelessWidget {
                     const Spacer(),
                     Text(
                       DateFormatter.relativeTime(DateTime.parse(bet['createdAt'] as String)),
-                      style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                      style: TextStyle(fontSize: 11, color: AppColors.textMuted),
                     ),
                   ],
                 ),
@@ -100,7 +100,7 @@ class _MyBetsTab extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   '${bet['homeTeamName']} vs ${bet['awayTeamName']}',
-                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                  style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 Row(
@@ -174,10 +174,10 @@ class _StatusChip extends StatelessWidget {
         color = AppColors.lost;
         label = 'Lost';
       case 'declined':
-        color = Colors.grey;
+        color = AppColors.textMuted;
         label = 'Declined';
       default:
-        color = Colors.grey;
+        color = AppColors.textMuted;
         label = status;
     }
 
@@ -256,7 +256,7 @@ class _CreatePropBetTabState extends State<_CreatePropBetTab> {
             return ListTile(
               leading: Icon(
                 isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-                color: isSelected ? AppColors.primary : Colors.grey,
+                color: isSelected ? AppColors.primary : AppColors.textMuted,
                 size: 20,
               ),
               title: Text(
@@ -288,7 +288,7 @@ class _CreatePropBetTabState extends State<_CreatePropBetTab> {
                   : null,
               child: ListTile(
                 leading: Icon(bt['icon'] as IconData,
-                    color: isSelected ? AppColors.primary : Colors.grey),
+                    color: isSelected ? AppColors.primary : AppColors.textMuted),
                 title: Text(bt['label'] as String,
                     style: TextStyle(fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400)),
                 subtitle: Text(bt['desc'] as String, style: const TextStyle(fontSize: 12)),

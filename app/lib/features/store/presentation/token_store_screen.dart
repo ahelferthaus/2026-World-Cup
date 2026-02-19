@@ -77,11 +77,11 @@ class TokenStoreScreen extends ConsumerWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.lock, size: 14, color: Colors.grey.shade500),
+                  Icon(Icons.lock, size: 14, color: AppColors.textMuted),
                   const SizedBox(width: AppSpacing.xs),
                   Text(
                     'Secured by Stripe',
-                    style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
+                    style: TextStyle(fontSize: 12, color: AppColors.textMuted),
                   ),
                 ],
               ),
@@ -92,7 +92,7 @@ class TokenStoreScreen extends ConsumerWidget {
               child: Text(
                 'Tokens are virtual currency for prediction games only.\nNo real money value. All purchases are final.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 11, color: Colors.grey.shade400),
+                style: TextStyle(fontSize: 11, color: AppColors.textMuted),
               ),
             ),
           ],
@@ -199,7 +199,7 @@ class _TokenPackageCard extends StatelessWidget {
                     ),
                     Text(
                       '${TokenFormatter.format(tokens)} tokens',
-                      style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                      style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
                     ),
                   ],
                 ),

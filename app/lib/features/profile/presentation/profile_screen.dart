@@ -296,7 +296,7 @@ class _StatCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(icon, size: 20, color: Colors.grey),
+          Icon(icon, size: 20, color: AppColors.textMuted),
           const SizedBox(height: AppSpacing.xs),
           Text(
             value,
@@ -305,7 +305,7 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: AppTextStyles.bodySmall.copyWith(color: Colors.grey),
+            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted),
           ),
         ],
       ),

@@ -89,10 +89,10 @@ class _PlayerLeaderboardList extends ConsumerWidget {
                     children: const [
                       SizedBox(width: 32),
                       SizedBox(width: 36 + AppSpacing.md), // avatar + gap
-                      Expanded(child: Text('Player', style: TextStyle(fontSize: 10, color: Colors.grey, fontWeight: FontWeight.w600))),
-                      SizedBox(width: 50, child: Text('Win%', style: TextStyle(fontSize: 10, color: Colors.grey, fontWeight: FontWeight.w600), textAlign: TextAlign.center)),
-                      SizedBox(width: 50, child: Text('Bold', style: TextStyle(fontSize: 10, color: Colors.grey, fontWeight: FontWeight.w600), textAlign: TextAlign.center)),
-                      SizedBox(width: 60, child: Text('Tokens', style: TextStyle(fontSize: 10, color: Colors.grey, fontWeight: FontWeight.w600), textAlign: TextAlign.right)),
+                      Expanded(child: Text('Player', style: TextStyle(fontSize: 10, color: AppColors.textMuted, fontWeight: FontWeight.w600))),
+                      SizedBox(width: 50, child: Text('Win%', style: TextStyle(fontSize: 10, color: AppColors.textMuted, fontWeight: FontWeight.w600), textAlign: TextAlign.center)),
+                      SizedBox(width: 50, child: Text('Bold', style: TextStyle(fontSize: 10, color: AppColors.textMuted, fontWeight: FontWeight.w600), textAlign: TextAlign.center)),
+                      SizedBox(width: 60, child: Text('Tokens', style: TextStyle(fontSize: 10, color: AppColors.textMuted, fontWeight: FontWeight.w600), textAlign: TextAlign.right)),
                     ],
                   ),
                 ),
@@ -124,7 +124,7 @@ class _PlayerLeaderboardList extends ConsumerWidget {
                                 fontWeight: FontWeight.w600,
                                 color: isCurrentUser
                                     ? AppColors.primary
-                                    : Colors.grey,
+                                    : AppColors.textMuted,
                               ),
                             ),
                           ),
@@ -161,7 +161,7 @@ class _PlayerLeaderboardList extends ConsumerWidget {
                                   entry.school,
                                   style: const TextStyle(
                                     fontSize: 10,
-                                    color: Colors.grey,
+                                    color: AppColors.textMuted,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -179,7 +179,7 @@ class _PlayerLeaderboardList extends ConsumerWidget {
                                 color: entry.winRate >= 60
                                     ? AppColors.success
                                     : entry.winRate >= 40
-                                        ? Colors.grey.shade700
+                                        ? AppColors.textSecondary
                                         : AppColors.lost,
                               ),
                             ),
@@ -194,7 +194,7 @@ class _PlayerLeaderboardList extends ConsumerWidget {
                                 fontWeight: FontWeight.w600,
                                 color: entry.boldness >= 70
                                     ? AppColors.secondary
-                                    : Colors.grey.shade600,
+                                    : AppColors.textMuted,
                               ),
                             ),
                           ),
@@ -281,7 +281,7 @@ class _AggregateCard extends StatelessWidget {
     } else if (entry.rank == 3) {
       rankColor = AppColors.bronze;
     } else {
-      rankColor = Colors.grey;
+      rankColor = AppColors.textMuted;
     }
 
     return Card(
@@ -328,7 +328,7 @@ class _AggregateCard extends StatelessWidget {
                       ),
                       Text(
                         '${entry.playerCount} players${entry.schoolCount != null ? ' \u2022 ${entry.schoolCount} schools' : ''}',
-                        style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                        style: TextStyle(fontSize: 11, color: AppColors.textMuted),
                       ),
                     ],
                   ),
@@ -346,7 +346,7 @@ class _AggregateCard extends StatelessWidget {
                     ),
                     const Text(
                       'total tokens',
-                      style: TextStyle(fontSize: 10, color: Colors.grey),
+                      style: TextStyle(fontSize: 10, color: AppColors.textMuted),
                     ),
                   ],
                 ),
@@ -359,14 +359,14 @@ class _AggregateCard extends StatelessWidget {
                 _MiniStat(
                   label: 'Win Rate',
                   value: '${entry.avgWinRate.toStringAsFixed(0)}%',
-                  color: entry.avgWinRate >= 55 ? AppColors.success : Colors.grey,
+                  color: entry.avgWinRate >= 55 ? AppColors.success : AppColors.textSecondary,
                   icon: Icons.trending_up,
                 ),
                 const SizedBox(width: AppSpacing.lg),
                 _MiniStat(
                   label: 'Boldness',
                   value: '${entry.avgBoldness.toStringAsFixed(0)}%',
-                  color: entry.avgBoldness >= 65 ? AppColors.secondary : Colors.grey,
+                  color: entry.avgBoldness >= 65 ? AppColors.secondary : AppColors.textSecondary,
                   icon: Icons.local_fire_department,
                 ),
               ],
@@ -393,7 +393,7 @@ class _MiniStat extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           '$label: ',
-          style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
+          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
         ),
         Text(
           value,
@@ -481,7 +481,7 @@ class _PodiumEntry extends StatelessWidget {
           '${entry.winRate.toStringAsFixed(0)}% win',
           style: TextStyle(
             fontSize: 10,
-            color: Colors.grey.shade500,
+            color: AppColors.textMuted,
           ),
         ),
         Text(
