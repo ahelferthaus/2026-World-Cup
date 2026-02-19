@@ -37,6 +37,12 @@ class AppColors {
   static const nbaBlue = Color(0xFF1D428A);
   static const nbaRed = Color(0xFFC8102E);
 
+  // Challenge category colors
+  static const challengeSports = Color(0xFFF37321);
+  static const challengeCustom = Color(0xFFE040FB);
+  static const challengeParty = Color(0xFFFFD600);
+  static const disputed = Color(0xFFFF9100);
+
   // Status colors
   static const live = Color(0xFF00E676);
   static const pending = Color(0xFF78909C);

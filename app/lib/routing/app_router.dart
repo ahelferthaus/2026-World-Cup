@@ -13,7 +13,7 @@ import '../features/predict/presentation/predict_screen.dart';
 import '../features/profile/presentation/edit_name_screen.dart';
 import '../features/profile/presentation/prediction_history_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
-import '../features/propbets/presentation/prop_bets_screen.dart';
+import '../features/challenges/presentation/challenges_hub_screen.dart';
 import '../features/store/presentation/token_store_screen.dart';
 import '../features/bracket/presentation/bracket_screen.dart';
 import '../features/livegame/presentation/live_game_screen.dart';
@@ -67,7 +67,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/propbets',
-        builder: (_, __) => const PropBetsScreen(),
+        builder: (_, __) => const ChallengesHubScreen(),
       ),
       GoRoute(
         path: '/bracket',

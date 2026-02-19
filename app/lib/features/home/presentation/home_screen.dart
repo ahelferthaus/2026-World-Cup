@@ -107,9 +107,10 @@ class _QuickAccessBar extends StatelessWidget {
               onTap: () => context.push('/news'),
             ),
             _QuickChip(
-              icon: Icons.handshake,
-              label: 'Prop Bets',
+              icon: Icons.bolt,
+              label: 'Challenges',
               onTap: () => context.push('/propbets'),
+              highlight: true,
             ),
             _QuickChip(
               icon: Icons.store,
