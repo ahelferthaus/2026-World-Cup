@@ -455,6 +455,122 @@ class DemoData {
     ],
   };
 
+  // ---------------------------------------------------------------------------
+  // AI Research (demo responses)
+  // ---------------------------------------------------------------------------
+  static String researchResult(String query) {
+    final q = query.toLowerCase();
+    if (q.contains('mbappe') || q.contains('mbappé')) {
+      return '## Kylian Mbapp\u00e9 \u2013 World Cup Profile\n\n'
+          '**Age:** 27 | **Position:** Forward | **Club:** Real Madrid\n\n'
+          'Mbapp\u00e9 burst onto the World Cup scene in 2018, becoming the **youngest French scorer** since Pel\u00e9.\n\n'
+          '### World Cup Stats\n'
+          '- **2018 (Russia):** 4 goals, 1 assist \u2013 \u{1F3C6} Winner\n'
+          '- **2022 (Qatar):** 8 goals (inc. hat-trick in final) \u2013 Runner-up\n'
+          '- **2026 (USA/CAN/MEX):** Tournament in progress\n\n'
+          '### Key Facts\n'
+          '- All-time top scorer at a single World Cup final (3 goals vs Argentina)\n'
+          '- France\'s talisman and captain for the 2026 campaign\n'
+          '- On track to challenge **Miroslav Klose\'s** all-time record of 16 World Cup goals';
+    } else if (q.contains('usa') || q.contains('united states')) {
+      return '## USA \u2013 2026 World Cup Host Nation\n\n'
+          'The **USMNT** enters their home World Cup as one of the most hyped squads in recent memory.\n\n'
+          '### Squad Strengths\n'
+          '- **Christian Pulisic** \u2013 Captain, elite creative force\n'
+          '- **Gio Reyna** \u2013 Midfield maestro with Borussia Dortmund pedigree\n'
+          '- **Yunus Musah** \u2013 Box-to-box energy machine\n\n'
+          '### Key Info\n'
+          '- **FIFA Ranking:** Top 15\n'
+          '- **Best WC finish:** 3rd place (1930)\n'
+          '- Home advantage across 11 US venues\n'
+          '- Group stage favorites to advance\n\n'
+          '**Bold prediction:** USA reaches the quarterfinals on home soil.';
+    }
+    return '## Research Results\n\n'
+        'Here\'s what we found about **"$query"**:\n\n'
+        '- The 2026 FIFA World Cup is the first with **48 teams**\n'
+        '- Hosted across **USA, Canada, and Mexico** (16 venues)\n'
+        '- Tournament runs **June 11 \u2013 July 19, 2026**\n'
+        '- Expanded format with 12 groups of 4 teams\n\n'
+        '### Did You Know?\n'
+        '- This is the first World Cup hosted by **three nations**\n'
+        '- The final will be held at **MetLife Stadium** in New Jersey\n'
+        '- Over **5 million** tickets available for fans\n\n'
+        '*Search for specific players or teams to get detailed stats!*';
+  }
+
+  // ---------------------------------------------------------------------------
+  // Pokin' Pete Chat (demo responses)
+  // ---------------------------------------------------------------------------
+  static String peteResponse(String message) {
+    final m = message.toLowerCase();
+    if (m.contains('who wins') || m.contains('winner') || m.contains('champion')) {
+      return "OH you want the REAL prediction? \u{1F525}\n\n"
+          "Look, everyone's gonna say Brazil or France, and yeah they're STACKED. "
+          "But I'm calling it right now \u2014 the HOST NATION curse gets BROKEN. "
+          "The USA makes a deep run on home soil, the crowds at MetLife are gonna be ELECTRIC.\n\n"
+          "But my actual pick to lift the trophy? FRANCE. \u{1F1EB}\u{1F1F7} "
+          "Mbapp\u00e9, Tchouam\u00e9ni, Saliba \u2014 that squad is RIDICULOUS.\n\n"
+          "Bet against me if you dare! \u{1FA99}";
+    } else if (m.contains('bold prediction') || m.contains('hot take')) {
+      return "\u{1F525} PETE'S HOT TAKE OF THE DAY \u{1F525}\n\n"
+          "Japan makes the SEMIFINALS. Yeah I said it.\n\n"
+          "They've been low-key dominating Asian qualifiers, their J-League pipeline is INSANE, "
+          "and Kubo is having the season of his LIFE at Real Sociedad.\n\n"
+          "Everyone sleeps on the Samurai Blue and then acts SHOCKED when they top their group. "
+          "2022 they beat Germany AND Spain. 2026? They go even further. \u{1F1EF}\u{1F1F5}\n\n"
+          "Put your tokens where your mouth is! \u{1FA99}";
+    } else if (m.contains('best player') || m.contains('watch')) {
+      return "Oh EASY. You gotta watch these three:\n\n"
+          "\u{1F947} **Jude Bellingham** \u2014 This kid is BUILT DIFFERENT. Real Madrid star at 22. "
+          "England's entire attack runs through him.\n\n"
+          "\u{1F948} **Lamine Yamal** \u2014 He's only 18 and he's already a Ballon d'Or contender. "
+          "Barcelona's gem is gonna COOK.\n\n"
+          "\u{1F949} **Florian Wirtz** \u2014 Germany's answer to everything. "
+          "Leverkusen's maestro is ready to announce himself to the WORLD.\n\n"
+          "But honestly? Mbapp\u00e9 is still the guy everyone fears most. \u26A1";
+    } else if (m.contains('trash talk') || m.contains('roast')) {
+      return "OH you want SMOKE? \u{1F525}\u{1F525}\u{1F525}\n\n"
+          "It's COMING HOME? Yeah coming home to watch the tournament on TV after the quarterfinals like ALWAYS. \u{1F3F4}\u200D\u2620\uFE0F\n\n"
+          "England's been \"almost there\" since 1966. That's almost 60 YEARS of almost. "
+          "Southgate's gone but the pain lives on!\n\n"
+          "I'm just kidding... kinda. Bellingham might actually drag them to glory. "
+          "But until they prove it, England is the ULTIMATE \"next year\" team.\n\n"
+          "Don't @ me! \u{1F602}";
+    }
+    return "Great question! \u26BD\n\n"
+        "The 2026 World Cup is gonna be MASSIVE. 48 teams, 3 host nations, "
+        "and more drama than a telenovela.\n\n"
+        "If you want my take on specific matchups, player comparisons, or bold predictions, "
+        "just ask! I live for this stuff.\n\n"
+        "And hey \u2014 make sure you're putting those tokens to work on your predictions! "
+        "Fortune favors the BOLD. \u{1FA99}\u{1F525}";
+  }
+
+  // ---------------------------------------------------------------------------
+  // Additional bet markets (Both Teams to Score, Player Props)
+  // ---------------------------------------------------------------------------
+  static List<Map<String, dynamic>> get bttsMarkets => [
+    {'matchId': 1001, 'home': 'United States', 'away': 'Mexico', 'yesOdds': 1.65, 'noOdds': 2.10},
+    {'matchId': 1002, 'home': 'Brazil', 'away': 'Argentina', 'yesOdds': 1.75, 'noOdds': 2.00},
+    {'matchId': 1003, 'home': 'England', 'away': 'Germany', 'yesOdds': 1.80, 'noOdds': 1.95},
+    {'matchId': 1004, 'home': 'France', 'away': 'Spain', 'yesOdds': 1.70, 'noOdds': 2.05},
+  ];
+
+  static List<Map<String, dynamic>> get playerPropMarkets => [
+    {'matchId': 1001, 'player': 'Pulisic', 'team': 'United States', 'prop': 'Anytime Goalscorer', 'odds': 3.50},
+    {'matchId': 1001, 'player': 'Lozano', 'team': 'Mexico', 'prop': 'Anytime Goalscorer', 'odds': 4.20},
+    {'matchId': 1002, 'player': 'Vinícius Jr', 'team': 'Brazil', 'prop': 'Anytime Goalscorer', 'odds': 2.80},
+    {'matchId': 1002, 'player': 'Messi', 'team': 'Argentina', 'prop': 'Anytime Goalscorer', 'odds': 3.10},
+    {'matchId': 1003, 'player': 'Bellingham', 'team': 'England', 'prop': 'Anytime Goalscorer', 'odds': 3.40},
+    {'matchId': 1003, 'player': 'Wirtz', 'team': 'Germany', 'prop': 'Anytime Goalscorer', 'odds': 3.80},
+    {'matchId': 1004, 'player': 'Mbappé', 'team': 'France', 'prop': 'Anytime Goalscorer', 'odds': 2.20},
+    {'matchId': 1004, 'player': 'Yamal', 'team': 'Spain', 'prop': 'Anytime Goalscorer', 'odds': 3.60},
+    {'matchId': 1001, 'player': 'Pulisic', 'team': 'United States', 'prop': '1+ Assist', 'odds': 4.50},
+    {'matchId': 1002, 'player': 'Vinícius Jr', 'team': 'Brazil', 'prop': '2+ Shots on Target', 'odds': 2.10},
+    {'matchId': 1004, 'player': 'Mbappé', 'team': 'France', 'prop': 'First Goalscorer', 'odds': 5.50},
+  ];
+
   static Map<String, dynamic> _bracketMatch(
     String id,
     String home, String homeLogo,

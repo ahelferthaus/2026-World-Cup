@@ -368,6 +368,18 @@ class _QuickAccessBar extends StatelessWidget {
               highlight: true,
             ),
             _QuickChip(
+              icon: Icons.science,
+              label: 'Research',
+              onTap: () => context.push('/research'),
+              highlight: true,
+            ),
+            _QuickChip(
+              icon: Icons.chat_bubble,
+              label: "Pokin' Pete",
+              onTap: () => context.push('/chat'),
+              highlight: true,
+            ),
+            _QuickChip(
               icon: Icons.store,
               label: 'Buy Tokens',
               onTap: () => context.push('/store'),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/data/demo_data.dart';
 import '../../../core/extensions/async_value_extensions.dart';
 import '../../../core/utils/token_formatter.dart';
 import '../../../core/widgets/app_empty_state.dart';
@@ -23,64 +24,79 @@ class PredictScreen extends ConsumerWidget {
     final matchesAsync = ref.watch(matchesTodayProvider);
     final userProfile = ref.watch(userProfileProvider).valueOrNull;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Predict'),
-        actions: [
-          if (userProfile != null)
-            Padding(
-              padding: const EdgeInsets.only(right: AppSpacing.lg),
-              child: TokenBadge(tokens: userProfile.tokens, compact: true),
-            ),
-        ],
-      ),
-      body: matchesAsync.when(
-        loading: () => const AppLoadingIndicator(message: 'Loading matches...'),
-        error: (error, _) => AppErrorWidget(
-          message: 'Could not load matches.',
-          onRetry: () => ref.invalidate(matchesTodayProvider),
-        ),
-        data: (matches) {
-          final upcoming = matches.where((m) => m.isUpcoming).toList();
-
-          if (upcoming.isEmpty) {
-            return const AppEmptyState(
-              icon: Icons.sports_soccer,
-              title: 'No upcoming matches',
-              subtitle: 'Predictions open before kickoff. Check back later!',
-            );
-          }
-
-          return Column(
-            children: [
-              // Betting Lines Explainer Banner
-              _BettingLinesExplainer(),
-              // ALL IN Button
-              if (userProfile != null && userProfile.tokens > 0)
-                _AllInBanner(tokens: userProfile.tokens),
-              // Match List with Odds
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                  itemCount: upcoming.length,
-                  itemBuilder: (context, index) {
-                    final match = upcoming[index];
-                    return Column(
-                      children: [
-                        MatchCard(
-                          match: match,
-                          onTap: () => _openPredictionForm(context, match),
-                        ),
-                        // Odds chips below each match
-                        _OddsRow(match: match),
-                      ],
-                    );
-                  },
-                ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Predict'),
+          actions: [
+            if (userProfile != null)
+              Padding(
+                padding: const EdgeInsets.only(right: AppSpacing.lg),
+                child: TokenBadge(tokens: userProfile.tokens, compact: true),
               ),
+          ],
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'Match Winner'),
+              Tab(text: 'BTTS'),
+              Tab(text: 'Player Props'),
             ],
-          );
-        },
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // Tab 1: Original Match Winner predictions
+            matchesAsync.when(
+              loading: () => const AppLoadingIndicator(message: 'Loading matches...'),
+              error: (error, _) => AppErrorWidget(
+                message: 'Could not load matches.',
+                onRetry: () => ref.invalidate(matchesTodayProvider),
+              ),
+              data: (matches) {
+                final upcoming = matches.where((m) => m.isUpcoming).toList();
+
+                if (upcoming.isEmpty) {
+                  return const AppEmptyState(
+                    icon: Icons.sports_soccer,
+                    title: 'No upcoming matches',
+                    subtitle: 'Predictions open before kickoff. Check back later!',
+                  );
+                }
+
+                return Column(
+                  children: [
+                    _BettingLinesExplainer(),
+                    if (userProfile != null && userProfile.tokens > 0)
+                      _AllInBanner(tokens: userProfile.tokens),
+                    Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                        itemCount: upcoming.length,
+                        itemBuilder: (context, index) {
+                          final match = upcoming[index];
+                          return Column(
+                            children: [
+                              MatchCard(
+                                match: match,
+                                onTap: () => _openPredictionForm(context, match),
+                              ),
+                              _OddsRow(match: match),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            // Tab 2: Both Teams to Score
+            _BttsTab(),
+            // Tab 3: Player Props
+            _PlayerPropsTab(),
+          ],
+        ),
       ),
     );
   }
@@ -451,6 +467,209 @@ class _OddsChip extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Both Teams to Score Tab
+// ---------------------------------------------------------------------------
+class _BttsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final markets = DemoData.bttsMarkets;
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      itemCount: markets.length,
+      itemBuilder: (context, index) {
+        final m = markets[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${m['home']} vs ${m['away']}',
+                  style: const TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  'Both Teams to Score?',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textMuted,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _BttsButton(
+                        label: 'YES',
+                        odds: (m['yesOdds'] as num).toStringAsFixed(2),
+                        color: AppColors.success,
+                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('BTTS Yes at ${(m['yesOdds'] as num).toStringAsFixed(2)} — coming soon!'),
+                            backgroundColor: AppColors.success,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: _BttsButton(
+                        label: 'NO',
+                        odds: (m['noOdds'] as num).toStringAsFixed(2),
+                        color: AppColors.lost,
+                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('BTTS No at ${(m['noOdds'] as num).toStringAsFixed(2)} — coming soon!'),
+                            backgroundColor: AppColors.lost,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _BttsButton extends StatelessWidget {
+  const _BttsButton({
+    required this.label,
+    required this.odds,
+    required this.color,
+    required this.onTap,
+  });
+  final String label;
+  final String odds;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color.withValues(alpha: 0.12),
+      borderRadius: BorderRadius.circular(AppSpacing.buttonRadius),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppSpacing.buttonRadius),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+          child: Column(
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  color: color,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                odds,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Player Props Tab
+// ---------------------------------------------------------------------------
+class _PlayerPropsTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final props = DemoData.playerPropMarkets;
+
+    // Group by player
+    final grouped = <String, List<Map<String, dynamic>>>{};
+    for (final p in props) {
+      final key = '${p['player']} (${p['team']})';
+      grouped.putIfAbsent(key, () => []).add(p);
+    }
+
+    final entries = grouped.entries.toList();
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      itemCount: entries.length,
+      itemBuilder: (context, index) {
+        final entry = entries[index];
+        return Card(
+          margin: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.person, size: 18, color: AppColors.primary),
+                    const SizedBox(width: AppSpacing.sm),
+                    Text(
+                      entry.key,
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Wrap(
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.sm,
+                  children: entry.value.map((prop) {
+                    return ActionChip(
+                      label: Text(
+                        '${prop['prop']}  ${(prop['odds'] as num).toStringAsFixed(2)}',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      avatar: Icon(Icons.bolt, size: 14, color: AppColors.accent),
+                      side: BorderSide(color: AppColors.accent.withValues(alpha: 0.3)),
+                      onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            '${prop['player']} ${prop['prop']} at ${(prop['odds'] as num).toStringAsFixed(2)} — coming soon!',
+                          ),
+                          backgroundColor: AppColors.accent,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

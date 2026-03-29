@@ -21,6 +21,8 @@ import '../features/nba/presentation/nba_home_screen.dart';
 import '../features/sporthub/presentation/sport_hub_screen.dart';
 import '../features/streaks/presentation/streaks_screen.dart';
 import '../features/teams/presentation/teams_screen.dart';
+import '../features/research/presentation/research_screen.dart';
+import '../features/chat/presentation/chat_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateProvider);
@@ -84,6 +86,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/streaks',
         builder: (_, __) => const StreaksScreen(),
+      ),
+      GoRoute(
+        path: '/research',
+        builder: (_, __) => const ResearchScreen(),
+      ),
+      GoRoute(
+        path: '/chat',
+        builder: (_, __) => const ChatScreen(),
       ),
       GoRoute(
         path: '/live/:matchId',
