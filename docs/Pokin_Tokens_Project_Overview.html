@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pokin' Tokens — Project Overview</title>
+<style>
+  @page {
+    size: letter;
+    margin: 1in 0.85in;
+    @top-center { content: "Pokin' Tokens — Confidential"; font-size: 9px; color: #999; }
+    @bottom-center { content: "Page " counter(page) " of " counter(pages); font-size: 9px; color: #999; }
+  }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a2e;
+    max-width: 7.5in;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 28pt;
+    color: #6C5CE7;
+    border-bottom: 3px solid #6C5CE7;
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  h2 {
+    font-size: 18pt;
+    color: #3D2E9E;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+    margin-top: 30px;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 13pt;
+    color: #6C5CE7;
+    margin-top: 20px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 11pt;
+    color: #555;
+    margin-top: 14px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  th {
+    background: #6C5CE7;
+    color: white;
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 600;
+  }
+  td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  tr:nth-child(even) td { background: #f8f7ff; }
+  code {
+    background: #f0eeff;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-family: 'Consolas', 'Courier New', monospace;
+  }
+  pre {
+    background: #1a1730;
+    color: #e0e0e0;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 9pt;
+    line-height: 1.4;
+    overflow-x: auto;
+    page-break-inside: avoid;
+  }
+  .cover {
+    text-align: center;
+    padding: 120px 0 60px 0;
+    page-break-after: always;
+  }
+  .cover h1 {
+    font-size: 42pt;
+    border: none;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 16pt;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  .cover .meta {
+    font-size: 11pt;
+    color: #999;
+    margin-top: 80px;
+  }
+  .badge {
+    display: inline-block;
+    background: #6C5CE7;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9pt;
+    font-weight: 600;
+  }
+  .badge.green { background: #00C853; }
+  .badge.orange { background: #FF6D00; }
+  .badge.blue { background: #448AFF; }
+  ul { margin: 6px 0; }
+  li { margin-bottom: 4px; }
+  .highlight-box {
+    background: #f0eeff;
+    border-left: 4px solid #6C5CE7;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .two-col {
+    display: flex;
+    gap: 20px;
+  }
+  .two-col > div { flex: 1; }
+  .pagebreak { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <h1>Pokin' Tokens</h1>
+  <div class="subtitle">Social Sports Prediction Platform</div>
+  <p style="font-size: 14pt; color: #3D2E9E;">Project Overview &amp; Technical Documentation</p>
+  <div class="meta">
+    <p><strong>Version:</strong> 1.0.0</p>
+    <p><strong>Date:</strong> April 1, 2026</p>
+    <p><strong>Repository:</strong> github.com/ahelferthaus/2026-World-Cup</p>
+    <p><strong>Status:</strong> <span class="badge green">Active Development</span></p>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<h2>Table of Contents</h2>
+<ol>
+  <li><a href="#exec">Executive Summary</a></li>
+  <li><a href="#stack">Technology Stack</a></li>
+  <li><a href="#arch">Architecture &amp; Infrastructure</a></li>
+  <li><a href="#features">Complete Feature Set</a></li>
+  <li><a href="#platform">Platform Strategy: iOS App vs Web App</a></li>
+  <li><a href="#ai">AI Integration</a></li>
+  <li><a href="#security">Security Model</a></li>
+  <li><a href="#business">Business Model &amp; Monetization</a></li>
+  <li><a href="#roadmap">Roadmap &amp; Growth Strategy</a></li>
+  <li><a href="#stats">Codebase Statistics</a></li>
+</ol>
+
+<div class="pagebreak"></div>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<h2 id="exec">1. Executive Summary</h2>
+
+<p><strong>Pokin' Tokens</strong> is a cross-platform social sports prediction app built for the 2026 FIFA World Cup &mdash; the first World Cup hosted by three nations (USA, Canada, Mexico) and the first with 48 teams. The app targets high school students who want to predict match outcomes, challenge friends, and compete on school-based leaderboards using virtual tokens.</p>
+
+<div class="highlight-box">
+  <strong>Key Differentiators:</strong>
+  <ul>
+    <li><strong>School-based social competition</strong> &mdash; Leaderboards segmented by school and state drive organic, word-of-mouth adoption within student communities</li>
+    <li><strong>Virtual token economy</strong> &mdash; No real money involved, making it school-appropriate and COPPA-friendly</li>
+    <li><strong>AI-powered engagement</strong> &mdash; Perplexity-powered research lab and Gemini-powered chatbot mascot ("Pokin' Pete")</li>
+    <li><strong>Multi-sport extensibility</strong> &mdash; Architecture supports expansion beyond soccer (NBA Playoffs already integrated)</li>
+    <li><strong>Premium Gen-Z UI</strong> &mdash; Dark theme with glassmorphism, animated gradients, and neon accents</li>
+  </ul>
+</div>
+
+<h3>Product Metrics (Target)</h3>
+<table>
+  <tr><th>Metric</th><th>Target</th><th>Driver</th></tr>
+  <tr><td>DAU during World Cup</td><td>10,000+</td><td>Daily predictions + streak system</td></tr>
+  <tr><td>School penetration</td><td>500+ US high schools</td><td>School leaderboards + challenges</td></tr>
+  <tr><td>Session length</td><td>8+ minutes</td><td>Live game betting + AI chat</td></tr>
+  <tr><td>D7 retention</td><td>40%+</td><td>Streak rewards + daily challenges</td></tr>
+</table>
+
+<div class="pagebreak"></div>
+
+<!-- 2. TECHNOLOGY STACK -->
+<h2 id="stack">2. Technology Stack</h2>
+
+<h3>Frontend</h3>
+<table>
+  <tr><th>Component</th><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+  <tr><td>Framework</td><td>Flutter</td><td>3.7+</td><td>Cross-platform UI (iOS, Android, Web)</td></tr>
+  <tr><td>Language</td><td>Dart</td><td>3.7.0</td><td>Type-safe, AOT-compiled for mobile</td></tr>
+  <tr><td>State Management</td><td>Riverpod</td><td>3.0</td><td>Reactive state, dependency injection</td></tr>
+  <tr><td>Navigation</td><td>GoRouter</td><td>16.0</td><td>Declarative routing with auth guards</td></tr>
+  <tr><td>Design System</td><td>Material 3</td><td>Latest</td><td>Dark theme with custom color scheme</td></tr>
+  <tr><td>HTTP</td><td>http package</td><td>1.3</td><td>Cloud Function API calls</td></tr>
+</table>
+
+<h3>Backend</h3>
+<table>
+  <tr><th>Component</th><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+  <tr><td>Runtime</td><td>Node.js</td><td>22</td><td>Cloud Function execution</td></tr>
+  <tr><td>Language</td><td>TypeScript</td><td>5.7</td><td>Type-safe backend code</td></tr>
+  <tr><td>Functions</td><td>Firebase Functions v2</td><td>6.3</td><td>Serverless HTTP &amp; event handlers</td></tr>
+  <tr><td>Admin SDK</td><td>Firebase Admin</td><td>13.0</td><td>Server-side Firestore &amp; Auth access</td></tr>
+  <tr><td>HTTP Client</td><td>Axios</td><td>1.8</td><td>External API calls</td></tr>
+</table>
+
+<h3>Infrastructure</h3>
+<table>
+  <tr><th>Service</th><th>Provider</th><th>Purpose</th></tr>
+  <tr><td>Database</td><td>Cloud Firestore</td><td>NoSQL document database</td></tr>
+  <tr><td>Authentication</td><td>Firebase Auth</td><td>Google, Apple, Email sign-in</td></tr>
+  <tr><td>Serverless Functions</td><td>Firebase Cloud Functions</td><td>API proxy, business logic, scheduled jobs</td></tr>
+  <tr><td>Sports Data</td><td>API-Football</td><td>Live fixtures, scores, standings</td></tr>
+  <tr><td>AI Research</td><td>Perplexity AI (sonar)</td><td>Real-time football research with citations</td></tr>
+  <tr><td>AI Chat</td><td>Google Gemini 2.0 Flash</td><td>Chatbot personality engine</td></tr>
+  <tr><td>Source Control</td><td>GitHub</td><td>Code repository and version control</td></tr>
+</table>
+
+<div class="pagebreak"></div>
+
+<!-- 3. ARCHITECTURE -->
+<h2 id="arch">3. Architecture &amp; Infrastructure</h2>
+
+<h3>System Architecture</h3>
+<pre>
+┌─────────────────────────────────────────────┐
+│              Flutter App                     │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐    │
+│  │ iOS App  │ │ Android  │ │ Web App  │    │
+│  │ (native) │ │ (native) │ │ (WASM)   │    │
+│  └────┬─────┘ └────┬─────┘ └────┬─────┘    │
+│       └─────────────┼───────────┘           │
+│              Riverpod State                  │
+│              GoRouter Navigation             │
+└──────────────────┬──────────────────────────┘
+                   │ HTTPS
+┌──────────────────┴──────────────────────────┐
+│         Firebase Cloud Functions             │
+│  ┌────────────────────────────────────────┐  │
+│  │  HTTP Endpoints (7)                    │  │
+│  │  matchesToday │ standings │ predictions│  │
+│  │  leaderboard  │ research  │ chat       │  │
+│  └────────────────────────────────────────┘  │
+│  ┌────────────────────────────────────────┐  │
+│  │  Triggers                              │  │
+│  │  onUserCreated │ resolveMatchPredictions│  │
+│  └────────────────────────────────────────┘  │
+└──────┬───────────┬───────────┬──────────────┘
+       │           │           │
+┌──────┴──┐  ┌─────┴────┐  ┌──┴──────────┐
+│Firestore│  │API-Football│ │AI APIs      │
+│         │  │           │  │Perplexity   │
+│users    │  │fixtures   │  │Gemini       │
+│predicts │  │standings  │  │             │
+│cache    │  │           │  │             │
+└─────────┘  └───────────┘  └─────────────┘
+</pre>
+
+<h3>Data Flow: Making a Prediction</h3>
+<ol>
+  <li>User selects a match and picks an outcome (e.g., "USA wins")</li>
+  <li>Flutter sends POST to <code>createPrediction</code> Cloud Function with auth token</li>
+  <li>Function verifies auth, validates wager against user balance</li>
+  <li>Function creates prediction doc in Firestore, decrements user tokens atomically</li>
+  <li>Every 5 minutes, <code>resolveMatchPredictions</code> checks API-Football for completed matches</li>
+  <li>For each completed match, function evaluates pending predictions</li>
+  <li>Winners receive <code>wager &times; multiplier</code> tokens via <code>FieldValue.increment()</code></li>
+</ol>
+
+<h3>Caching Strategy</h3>
+<p>API-Football has rate limits, so all sports data is cached in Firestore:</p>
+<table>
+  <tr><th>Cache</th><th>TTL</th><th>Rationale</th></tr>
+  <tr><td>Match fixtures</td><td>2 minutes</td><td>Near-real-time for live scores</td></tr>
+  <tr><td>Standings</td><td>30 minutes</td><td>Changes only after match completion</td></tr>
+</table>
+
+<div class="pagebreak"></div>
+
+<!-- 4. FEATURES -->
+<h2 id="features">4. Complete Feature Set</h2>
+
+<h3>4.1 Prediction Markets</h3>
+<table>
+  <tr><th>Market Type</th><th>Description</th><th>Payout</th></tr>
+  <tr><td>Match Winner (1X2)</td><td>Home, Draw, or Away</td><td>2.0x wager</td></tr>
+  <tr><td>Exact Score</td><td>Predict final score (e.g., 2-1)</td><td>5.0x wager</td></tr>
+  <tr><td>Over/Under 2.5</td><td>Total goals above or below 2.5</td><td>Odds-based</td></tr>
+  <tr><td>Both Teams to Score</td><td>Yes or No</td><td>Odds-based</td></tr>
+  <tr><td>Player Props</td><td>Anytime/First Goalscorer, Assists, Shots</td><td>Odds-based</td></tr>
+  <tr><td>ALL IN</td><td>Risk entire token balance on one pick</td><td>Standard multiplier</td></tr>
+</table>
+
+<h3>4.2 Social &amp; Competitive Features</h3>
+<ul>
+  <li><strong>P2P Challenges</strong> &mdash; Create head-to-head bets in 3 categories (Sports, Custom, Party Game)</li>
+  <li><strong>Social Feed</strong> &mdash; Venmo-style activity stream showing challenges, wins, and losses</li>
+  <li><strong>Head-to-Head Records</strong> &mdash; Track win/loss record against each opponent</li>
+  <li><strong>Party Mode</strong> &mdash; Multiplayer lobby for group challenges at watch parties</li>
+  <li><strong>4-Tab Leaderboard</strong> &mdash; Global, My School, By School aggregate, By State aggregate</li>
+</ul>
+
+<h3>4.3 Live Game Experience</h3>
+<ul>
+  <li>Real-time scoreboard with team logos and match minute</li>
+  <li>Quick bet chips (Next Goal, No Goals, Quick Goal) during live matches</li>
+  <li>VS tally bar showing running token count against friends</li>
+  <li>Game event feed with goal announcements, cards, and substitutions</li>
+  <li>Instant bet resolution on match events</li>
+</ul>
+
+<h3>4.4 Progression &amp; Retention</h3>
+<ul>
+  <li><strong>Daily Challenges</strong> &mdash; 4 challenges per day with token rewards (5-15 tokens each)</li>
+  <li><strong>Weekly Challenges</strong> &mdash; 3 challenges per week (25-100 tokens each)</li>
+  <li><strong>Streak Tracking</strong> &mdash; Visual streak counter with milestone rewards at 3/5/7/14/30/60 days</li>
+  <li><strong>Token Store</strong> &mdash; 4 purchasable token packs ($0.99 to $14.99)</li>
+</ul>
+
+<h3>4.5 Content &amp; Discovery</h3>
+<ul>
+  <li><strong>Tournament Bracket</strong> &mdash; Full knockout visualization (R16 through Final)</li>
+  <li><strong>Multi-Sport Hub</strong> &mdash; Expandable sport cards (World Cup + NBA Playoffs)</li>
+  <li><strong>Teams Encyclopedia</strong> &mdash; Squads, FIFA rankings, coaches, Golden Boot tracker</li>
+  <li><strong>Player Detail Sheets</strong> &mdash; Stats, position, club, age, international caps</li>
+  <li><strong>News Feed</strong> &mdash; Categorized sports articles with source attribution</li>
+</ul>
+
+<h3>4.6 AI Features</h3>
+<ul>
+  <li><strong>Research Lab</strong> &mdash; Perplexity AI-powered football research with source citations</li>
+  <li><strong>Pokin' Pete Chatbot</strong> &mdash; Gemini-powered AI mascot with soccer personality</li>
+</ul>
+
+<h3>4.7 Screen Inventory (20+ screens)</h3>
+<table>
+  <tr><th>Screen</th><th>Route</th><th>Nav Type</th></tr>
+  <tr><td>Home (Matches + Standings)</td><td><code>/home</code></td><td>Bottom Nav</td></tr>
+  <tr><td>Predict (Winner + BTTS + Props)</td><td><code>/predict</code></td><td>Bottom Nav</td></tr>
+  <tr><td>Leaderboard (4 tabs)</td><td><code>/leaderboard</code></td><td>Bottom Nav</td></tr>
+  <tr><td>Profile + Edit + History</td><td><code>/profile</code></td><td>Bottom Nav</td></tr>
+  <tr><td>Challenges Hub (5 tabs)</td><td><code>/propbets</code></td><td>Full Screen</td></tr>
+  <tr><td>Live Game</td><td><code>/live/:matchId</code></td><td>Full Screen</td></tr>
+  <tr><td>Tournament Bracket</td><td><code>/bracket</code></td><td>Full Screen</td></tr>
+  <tr><td>Teams (Teams + Players + Golden Boot)</td><td><code>/teams</code></td><td>Full Screen</td></tr>
+  <tr><td>Multi-Sport Hub</td><td><code>/sports</code></td><td>Full Screen</td></tr>
+  <tr><td>NBA Playoffs</td><td><code>/nba</code></td><td>Full Screen</td></tr>
+  <tr><td>News Feed</td><td><code>/news</code></td><td>Full Screen</td></tr>
+  <tr><td>Token Store</td><td><code>/store</code></td><td>Full Screen</td></tr>
+  <tr><td>Streaks &amp; Challenges</td><td><code>/streaks</code></td><td>Full Screen</td></tr>
+  <tr><td>Research Lab</td><td><code>/research</code></td><td>Full Screen</td></tr>
+  <tr><td>Pokin' Pete Chat</td><td><code>/chat</code></td><td>Full Screen</td></tr>
+  <tr><td>Login / Register</td><td><code>/login</code></td><td>Auth Flow</td></tr>
+</table>
+
+<div class="pagebreak"></div>
+
+<!-- 5. PLATFORM STRATEGY -->
+<h2 id="platform">5. Platform Strategy: iOS App vs Web App</h2>
+
+<h3>How Flutter Enables Multi-Platform</h3>
+<p>Flutter compiles from a single Dart codebase to three distinct targets:</p>
+
+<table>
+  <tr><th>Platform</th><th>Build Command</th><th>Output</th><th>Distribution</th></tr>
+  <tr><td><span class="badge">iOS</span></td><td><code>flutter build ios</code></td><td>Native iOS binary (ARM64)</td><td>Apple App Store / TestFlight</td></tr>
+  <tr><td><span class="badge green">Android</span></td><td><code>flutter build appbundle</code></td><td>Android App Bundle</td><td>Google Play Store</td></tr>
+  <tr><td><span class="badge blue">Web</span></td><td><code>flutter build web</code></td><td>HTML/JS/WASM</td><td>Firebase Hosting / any CDN</td></tr>
+</table>
+
+<h3>iOS App Setup</h3>
+<p>The project is fully configured for iOS deployment:</p>
+<ul>
+  <li><strong>Xcode project</strong> &mdash; <code>ios/Runner.xcodeproj</code> and <code>Runner.xcworkspace</code> (CocoaPods)</li>
+  <li><strong>Bundle info</strong> &mdash; <code>Info.plist</code> with display name "Pokin' Tokens", portrait + landscape orientations</li>
+  <li><strong>Firebase</strong> &mdash; <code>GoogleService-Info.plist</code> generated via FlutterFire CLI</li>
+  <li><strong>Auth</strong> &mdash; Apple Sign-In configured (required for App Store apps with social login)</li>
+  <li><strong>Build</strong> &mdash; Requires macOS with Xcode; archive and upload to App Store Connect</li>
+</ul>
+
+<h3>Web App Setup</h3>
+<p>The web build is a Progressive Web App (PWA) with:</p>
+<ul>
+  <li><strong>index.html</strong> &mdash; Flutter bootstrap loader, responsive viewport, PWA meta tags</li>
+  <li><strong>manifest.json</strong> &mdash; PWA manifest for "Add to Home Screen" functionality</li>
+  <li><strong>Icons</strong> &mdash; Favicon and touch icons for mobile bookmarks</li>
+  <li><strong>Responsive layout</strong> &mdash; Adapts from mobile (bottom nav) to tablet (side rail) to desktop (extended rail)</li>
+</ul>
+
+<h3>Shared vs Platform-Specific Code</h3>
+<div class="highlight-box">
+  <strong>100% shared Dart code.</strong> There is no platform-specific Dart code. All UI, business logic, navigation, and state management is shared across iOS, Android, and Web. The only platform-specific files are native configuration (Info.plist, AndroidManifest.xml, index.html) which Flutter manages automatically.
+</div>
+
+<h3>Deployment Strategy</h3>
+<table>
+  <tr><th>Phase</th><th>Platform</th><th>Rationale</th></tr>
+  <tr><td>Phase 1 (MVP)</td><td>Web (Firebase Hosting)</td><td>Fastest to deploy, no app store review, shareable links for school adoption</td></tr>
+  <tr><td>Phase 2 (Pre-WC)</td><td>iOS (App Store)</td><td>Premium experience for iPhone users (dominant in US teen market)</td></tr>
+  <tr><td>Phase 3 (Launch)</td><td>Android (Play Store)</td><td>Expand reach for broader adoption</td></tr>
+</table>
+
+<div class="pagebreak"></div>
+
+<!-- 6. AI INTEGRATION -->
+<h2 id="ai">6. AI Integration</h2>
+
+<h3>Research Lab (Perplexity AI)</h3>
+<table>
+  <tr><th>Attribute</th><th>Value</th></tr>
+  <tr><td>Model</td><td>Perplexity <code>sonar</code></td></tr>
+  <tr><td>Proxy</td><td>Firebase Cloud Function (<code>/research</code>)</td></tr>
+  <tr><td>System prompt</td><td>Concise football research, &lt;400 words, markdown formatted</td></tr>
+  <tr><td>Recency filter</td><td>Last month</td></tr>
+  <tr><td>Output</td><td>Markdown content + up to 4 source citation URLs</td></tr>
+  <tr><td>Use case</td><td>Users research players, teams, and stats before making predictions</td></tr>
+</table>
+
+<h3>Pokin' Pete Chatbot (Google Gemini)</h3>
+<table>
+  <tr><th>Attribute</th><th>Value</th></tr>
+  <tr><td>Model</td><td>Gemini 2.0 Flash</td></tr>
+  <tr><td>Proxy</td><td>Firebase Cloud Function (<code>/chat</code>)</td></tr>
+  <tr><td>Personality</td><td>Witty sports commentator, enthusiastic, school-appropriate</td></tr>
+  <tr><td>Temperature</td><td>0.9 (creative, varied responses)</td></tr>
+  <tr><td>Max tokens</td><td>1,024 per response</td></tr>
+  <tr><td>Guardrails</td><td>No profanity, no inappropriate content, steers to soccer topics</td></tr>
+  <tr><td>Features</td><td>Multi-turn conversation, starter prompts, markdown rendering</td></tr>
+</table>
+
+<h3>AI Cost Considerations</h3>
+<p>Both AI features are proxied through Cloud Functions, enabling:</p>
+<ul>
+  <li>API key security (keys never exposed to client)</li>
+  <li>Rate limiting at the function level</li>
+  <li>Response caching potential (common queries)</li>
+  <li>Usage monitoring via Firebase function logs</li>
+  <li>Easy model swapping without app updates</li>
+</ul>
+
+<div class="pagebreak"></div>
+
+<!-- 7. SECURITY -->
+<h2 id="security">7. Security Model</h2>
+
+<h3>Defense in Depth</h3>
+
+<h4>Client Layer</h4>
+<ul>
+  <li>Firebase Auth tokens required for all API calls</li>
+  <li>No API keys stored in client code</li>
+  <li>Auth state managed by Riverpod with automatic refresh</li>
+</ul>
+
+<h4>API Layer</h4>
+<ul>
+  <li>Cloud Functions verify Bearer tokens via Firebase Admin SDK</li>
+  <li>All external API keys stored as Firebase Secrets (not environment variables)</li>
+  <li>CORS enabled with domain restrictions</li>
+</ul>
+
+<h4>Database Layer</h4>
+<ul>
+  <li><strong>Users:</strong> Read own doc only; can only update <code>displayName</code> (string, 1-20 chars)</li>
+  <li><strong>Predictions:</strong> Read own only; all writes are server-side via Admin SDK</li>
+  <li><strong>Cache:</strong> Read-only for authenticated users</li>
+  <li><strong>Default:</strong> Deny all unmatched paths</li>
+  <li><strong>Token writes:</strong> Server-side only via <code>FieldValue.increment()</code> &mdash; users cannot modify their own balance</li>
+</ul>
+
+<h4>Business Logic</h4>
+<ul>
+  <li>Wager validation: server checks balance before accepting prediction</li>
+  <li>Atomic token operations via Firestore transactions</li>
+  <li>Prediction resolution runs server-side on a schedule (no client trust)</li>
+</ul>
+
+<div class="pagebreak"></div>
+
+<!-- 8. BUSINESS MODEL -->
+<h2 id="business">8. Business Model &amp; Monetization</h2>
+
+<h3>Revenue Streams</h3>
+
+<h4>8.1 Virtual Token Purchases (Primary)</h4>
+<table>
+  <tr><th>Package</th><th>Tokens</th><th>Price</th><th>$/Token</th></tr>
+  <tr><td>Starter Pack</td><td>100</td><td>$0.99</td><td>$0.0099</td></tr>
+  <tr><td>Fan Pack <span class="badge orange">Popular</span></td><td>500</td><td>$3.99</td><td>$0.0080</td></tr>
+  <tr><td>Baller Pack</td><td>1,200</td><td>$7.99</td><td>$0.0067</td></tr>
+  <tr><td>Legend Pack</td><td>3,000</td><td>$14.99</td><td>$0.0050</td></tr>
+</table>
+<p><strong>Note:</strong> Tokens are virtual currency with no cash-out value, keeping the app compliant with gambling regulations. This is a prediction game, not gambling.</p>
+
+<h4>8.2 Premium Features (Future)</h4>
+<ul>
+  <li><strong>Pokin' Tokens Pro</strong> &mdash; Monthly subscription for advanced analytics, unlimited AI research, custom avatars, and ad-free experience</li>
+  <li><strong>Sponsored Challenges</strong> &mdash; Brand-sponsored prediction challenges with real prize pools (gift cards, merch)</li>
+  <li><strong>School Tournaments</strong> &mdash; Premium inter-school tournament brackets with entry fees</li>
+</ul>
+
+<h4>8.3 Advertising (Future)</h4>
+<ul>
+  <li>Native ad placements in news feed</li>
+  <li>Sponsored sports content and branded prediction cards</li>
+  <li>Targeted to 14-18 demographic (COPPA-compliant ad networks)</li>
+</ul>
+
+<h3>Unit Economics Model</h3>
+<table>
+  <tr><th>Metric</th><th>Assumption</th></tr>
+  <tr><td>Free users</td><td>85% of total (tokens from signup + streaks)</td></tr>
+  <tr><td>Paying users</td><td>15% conversion</td></tr>
+  <tr><td>Avg purchase</td><td>$3.99/user (Fan Pack)</td></tr>
+  <tr><td>Purchases/user/month</td><td>1.5x during World Cup</td></tr>
+  <tr><td>ARPU (paying)</td><td>~$6/month during tournament</td></tr>
+</table>
+
+<h3>Growth Strategy</h3>
+<ol>
+  <li><strong>School Network Effect</strong> &mdash; One student shares with friends → school leaderboard drives competition → word-of-mouth within school → cross-school rivalry drives expansion</li>
+  <li><strong>World Cup Timing</strong> &mdash; Launch aligned with June 2026 tournament start for maximum organic interest</li>
+  <li><strong>Web-First Launch</strong> &mdash; Shareable links (no app store friction) for fastest school penetration</li>
+  <li><strong>Content Loop</strong> &mdash; AI Research + Pete chatbot keep users engaged between matches</li>
+  <li><strong>Streak Mechanics</strong> &mdash; Daily/weekly challenges + streak rewards drive habitual return behavior</li>
+</ol>
+
+<h3>Competitive Landscape</h3>
+<table>
+  <tr><th>Competitor</th><th>Differentiator</th></tr>
+  <tr><td>FanDuel / DraftKings</td><td>Real money gambling (18+); Pokin' Tokens is virtual &amp; teen-appropriate</td></tr>
+  <tr><td>ESPN Bracket Challenge</td><td>One-time bracket only; PT has daily predictions + live betting + social</td></tr>
+  <tr><td>Sorare / Footium</td><td>NFT/crypto-based; PT is simple token system with no blockchain</td></tr>
+  <tr><td>FIFA Official App</td><td>No prediction game; PT fills the fan engagement gap</td></tr>
+</table>
+
+<div class="pagebreak"></div>
+
+<!-- 9. ROADMAP -->
+<h2 id="roadmap">9. Roadmap &amp; Growth Strategy</h2>
+
+<h3>Phase 1: Pre-Tournament (Now &ndash; May 2026)</h3>
+<ul>
+  <li>Complete Firebase project setup and deploy Cloud Functions</li>
+  <li>Connect live API-Football data (replace demo mode for production)</li>
+  <li>Implement Stripe/Apple Pay for token purchases</li>
+  <li>Deploy web app to Firebase Hosting</li>
+  <li>Beta test with 5-10 schools</li>
+  <li>AI avatar generation for profiles</li>
+</ul>
+
+<h3>Phase 2: Tournament Launch (June 2026)</h3>
+<ul>
+  <li>Submit to iOS App Store and Google Play</li>
+  <li>Launch marketing push targeting high school sports communities</li>
+  <li>Enable push notifications for live matches and challenge responses</li>
+  <li>Real-time Firestore listeners for live game updates</li>
+  <li>Direct messaging between challengers</li>
+</ul>
+
+<h3>Phase 3: Post-Tournament Expansion (August 2026+)</h3>
+<ul>
+  <li>Expand multi-sport hub: NFL, Champions League, Premier League, MLS</li>
+  <li>Introduce Pokin' Tokens Pro subscription</li>
+  <li>School ambassador program for organic growth</li>
+  <li>Branded challenge partnerships with sponsors</li>
+  <li>Fantasy-style season-long competition mode</li>
+</ul>
+
+<h3>Technical Debt &amp; Infrastructure</h3>
+<ul>
+  <li>CI/CD pipeline (GitHub Actions for build + deploy)</li>
+  <li>Automated testing (unit + widget + integration)</li>
+  <li>Analytics integration (Firebase Analytics, Crashlytics)</li>
+  <li>Performance monitoring and error tracking</li>
+  <li>CDN for team logos and player images</li>
+</ul>
+
+<div class="pagebreak"></div>
+
+<!-- 10. CODEBASE STATS -->
+<h2 id="stats">10. Codebase Statistics</h2>
+
+<table>
+  <tr><th>Metric</th><th>Count</th></tr>
+  <tr><td>Total source files</td><td>115</td></tr>
+  <tr><td>Total lines of code</td><td>~16,000</td></tr>
+  <tr><td>Dart files (frontend)</td><td>~85</td></tr>
+  <tr><td>TypeScript files (backend)</td><td>~15</td></tr>
+  <tr><td>Feature modules</td><td>18</td></tr>
+  <tr><td>Screens</td><td>20+</td></tr>
+  <tr><td>Reusable widgets</td><td>11</td></tr>
+  <tr><td>Cloud Functions</td><td>9 (7 HTTP + 1 auth trigger + 1 scheduled)</td></tr>
+  <tr><td>Firestore collections</td><td>4 + 2 cache collections</td></tr>
+  <tr><td>Composite indexes</td><td>4</td></tr>
+  <tr><td>Git commits</td><td>12</td></tr>
+  <tr><td>Dependencies (Flutter)</td><td>12 packages</td></tr>
+  <tr><td>Dependencies (Functions)</td><td>3 packages</td></tr>
+</table>
+
+<h3>Repository</h3>
+<table>
+  <tr><th>Attribute</th><th>Value</th></tr>
+  <tr><td>URL</td><td>github.com/ahelferthaus/2026-World-Cup</td></tr>
+  <tr><td>Branch</td><td><code>master</code></td></tr>
+  <tr><td>Firebase Project</td><td><code>pokin-tokens</code></td></tr>
+  <tr><td>Flutter Package</td><td><code>pokin_tokens</code></td></tr>
+</table>
+
+<br><br>
+<div style="text-align: center; color: #999; font-size: 10pt; border-top: 1px solid #ddd; padding-top: 16px;">
+  <p><strong>Pokin' Tokens</strong> &mdash; Predict &bull; Compete &bull; Win</p>
+  <p>Confidential &mdash; April 2026</p>
+</div>
+
+</body>
+</html>
