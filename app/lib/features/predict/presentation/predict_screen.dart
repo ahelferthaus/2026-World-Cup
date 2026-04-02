@@ -14,6 +14,7 @@ import '../../../core/widgets/token_badge.dart';
 import '../../home/domain/match_model.dart';
 import '../../home/presentation/providers/matches_providers.dart';
 import '../../profile/presentation/providers/profile_providers.dart';
+import '../../../core/widgets/gradient_button.dart';
 import 'widgets/prediction_form.dart';
 
 class PredictScreen extends ConsumerWidget {
@@ -347,11 +348,11 @@ class _AllInRoosterDialog extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Pick a match and slide the wager to max! \u{1F525}'),
-                        backgroundColor: AppColors.secondary,
-                      ),
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (_) => _AllInMatchPicker(tokens: tokens),
                     );
                   },
                   child: Row(
@@ -366,6 +367,102 @@ class _AllInRoosterDialog extends StatelessWidget {
               ),
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// ALL IN Match Picker Bottom Sheet
+// ---------------------------------------------------------------------------
+class _AllInMatchPicker extends StatelessWidget {
+  const _AllInMatchPicker({required this.tokens});
+  final int tokens;
+
+  @override
+  Widget build(BuildContext context) {
+    final upcomingMatches = DemoData.matches
+        .where((m) => m['status'] == 'NS')
+        .map((m) => MatchModel.fromJson(m))
+        .toList();
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(AppSpacing.xl),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: AppSpacing.md),
+          Container(
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: AppColors.divider,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          Text(
+            '\u{1F414} Pick a match to go ALL IN!',
+            style: AppTextStyles.heading3.copyWith(color: AppColors.secondary),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            'Wagering all $tokens tokens',
+            style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          if (upcomingMatches.isEmpty)
+            const Padding(
+              padding: EdgeInsets.all(AppSpacing.xl),
+              child: Text('No upcoming matches available.'),
+            )
+          else
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.sm,
+              ),
+              itemCount: upcomingMatches.length,
+              separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
+              itemBuilder: (context, index) {
+                final match = upcomingMatches[index];
+                return Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.sports_soccer, color: AppColors.primary),
+                    title: Text(
+                      '${match.homeTeam.name} vs ${match.awayTeam.name}',
+                      style: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (_) => PredictionForm(
+                          match: match,
+                          initialWager: tokens,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          const SizedBox(height: AppSpacing.xl),
         ],
       ),
     );
@@ -475,6 +572,34 @@ class _OddsChip extends StatelessWidget {
 // Both Teams to Score Tab
 // ---------------------------------------------------------------------------
 class _BttsTab extends StatelessWidget {
+  void _showMarketSheet(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required double odds,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _MarketPredictionSheet(
+        title: title,
+        subtitle: subtitle,
+        odds: odds,
+        onConfirm: (wager) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Prediction locked in! Wagered $wager tokens.',
+              ),
+              backgroundColor: AppColors.success,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final markets = DemoData.bttsMarkets;
@@ -515,11 +640,11 @@ class _BttsTab extends StatelessWidget {
                         label: 'YES',
                         odds: (m['yesOdds'] as num).toStringAsFixed(2),
                         color: AppColors.success,
-                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('BTTS Yes at ${(m['yesOdds'] as num).toStringAsFixed(2)} — coming soon!'),
-                            backgroundColor: AppColors.success,
-                          ),
+                        onTap: () => _showMarketSheet(
+                          context,
+                          title: '${m['home']} vs ${m['away']}',
+                          subtitle: 'Both Teams to Score: YES at ${(m['yesOdds'] as num).toStringAsFixed(2)}',
+                          odds: (m['yesOdds'] as num).toDouble(),
                         ),
                       ),
                     ),
@@ -529,11 +654,11 @@ class _BttsTab extends StatelessWidget {
                         label: 'NO',
                         odds: (m['noOdds'] as num).toStringAsFixed(2),
                         color: AppColors.lost,
-                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('BTTS No at ${(m['noOdds'] as num).toStringAsFixed(2)} — coming soon!'),
-                            backgroundColor: AppColors.lost,
-                          ),
+                        onTap: () => _showMarketSheet(
+                          context,
+                          title: '${m['home']} vs ${m['away']}',
+                          subtitle: 'Both Teams to Score: NO at ${(m['noOdds'] as num).toStringAsFixed(2)}',
+                          odds: (m['noOdds'] as num).toDouble(),
                         ),
                       ),
                     ),
@@ -603,6 +728,34 @@ class _BttsButton extends StatelessWidget {
 // Player Props Tab
 // ---------------------------------------------------------------------------
 class _PlayerPropsTab extends StatelessWidget {
+  void _showMarketSheet(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required double odds,
+  }) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _MarketPredictionSheet(
+        title: title,
+        subtitle: subtitle,
+        odds: odds,
+        onConfirm: (wager) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Prediction locked in! Wagered $wager tokens.',
+              ),
+              backgroundColor: AppColors.success,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final props = DemoData.playerPropMarkets;
@@ -654,13 +807,11 @@ class _PlayerPropsTab extends StatelessWidget {
                       ),
                       avatar: Icon(Icons.bolt, size: 14, color: AppColors.accent),
                       side: BorderSide(color: AppColors.accent.withValues(alpha: 0.3)),
-                      onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '${prop['player']} ${prop['prop']} at ${(prop['odds'] as num).toStringAsFixed(2)} — coming soon!',
-                          ),
-                          backgroundColor: AppColors.accent,
-                        ),
+                      onPressed: () => _showMarketSheet(
+                        context,
+                        title: '${prop['player']} (${prop['team']})',
+                        subtitle: '${prop['prop']} at ${(prop['odds'] as num).toStringAsFixed(2)}',
+                        odds: (prop['odds'] as num).toDouble(),
                       ),
                     );
                   }).toList(),
@@ -670,6 +821,156 @@ class _PlayerPropsTab extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Reusable Market Prediction Bottom Sheet
+// ---------------------------------------------------------------------------
+class _MarketPredictionSheet extends StatefulWidget {
+  const _MarketPredictionSheet({
+    required this.title,
+    required this.subtitle,
+    required this.odds,
+    required this.onConfirm,
+  });
+
+  final String title;
+  final String subtitle;
+  final double odds;
+  final void Function(int wager) onConfirm;
+
+  @override
+  State<_MarketPredictionSheet> createState() => _MarketPredictionSheetState();
+}
+
+class _MarketPredictionSheetState extends State<_MarketPredictionSheet> {
+  double _wager = 5;
+
+  int get _potentialReturn => (_wager * widget.odds).toInt();
+
+  Future<void> _submit() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Confirm Prediction'),
+        content: Text(
+          'Wager ${_wager.toInt()} tokens on\n${widget.subtitle}?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Lock In'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    // Demo mode: simulate success
+    await Future.delayed(const Duration(milliseconds: 300));
+    if (!mounted) return;
+
+    Navigator.pop(context);
+    widget.onConfirm(_wager.toInt());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(AppSpacing.xl),
+        ),
+      ),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Handle bar
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.divider,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            // Title
+            Text(
+              widget.title,
+              style: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            // Subtitle (pick + odds)
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.sm,
+              ),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(AppSpacing.chipRadius),
+              ),
+              child: Text(
+                widget.subtitle,
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: AppColors.primary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            // Wager slider
+            Text(
+              'Wager: ${_wager.toInt()} tokens',
+              style: AppTextStyles.heading3,
+            ),
+            Slider(
+              value: _wager,
+              min: 1,
+              max: 20,
+              divisions: 19,
+              label: '${_wager.toInt()}',
+              onChanged: (v) => setState(() => _wager = v),
+            ),
+            Text(
+              'Potential return: ${TokenFormatter.format(_potentialReturn)} tokens',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.success,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            // Lock In button
+            GradientButton(
+              label: 'Lock In Prediction',
+              onPressed: _submit,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+          ],
+        ),
+      ),
     );
   }
 }

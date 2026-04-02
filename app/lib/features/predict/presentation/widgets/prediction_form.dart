@@ -16,9 +16,10 @@ import '../../../profile/presentation/providers/profile_providers.dart';
 import '../providers/predict_providers.dart';
 
 class PredictionForm extends ConsumerStatefulWidget {
-  const PredictionForm({super.key, required this.match});
+  const PredictionForm({super.key, required this.match, this.initialWager});
 
   final MatchModel match;
+  final int? initialWager;
 
   @override
   ConsumerState<PredictionForm> createState() => _PredictionFormState();
@@ -26,7 +27,7 @@ class PredictionForm extends ConsumerStatefulWidget {
 
 class _PredictionFormState extends ConsumerState<PredictionForm> {
   String? _selectedOutcome;
-  double _wager = 5;
+  late double _wager = widget.initialWager?.toDouble() ?? 5;
   bool _exactScore = false;
   int _scoreHome = 0;
   int _scoreAway = 0;
