@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/data/demo_data.dart';
@@ -55,13 +56,8 @@ class _NewsCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          // In production, launch URL with url_launcher
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Would open: ${item['url']}'),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final uri = Uri.parse(item['url'] as String);
+          launchUrl(uri, mode: LaunchMode.externalApplication);
         },
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.lg),
