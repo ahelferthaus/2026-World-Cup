@@ -6,6 +6,7 @@ import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/data/demo_data.dart';
 import '../../../core/utils/token_formatter.dart';
+import '../../../core/widgets/pitch_visualization.dart';
 
 /// Live Game Session — real-time intragame friend betting with running tally.
 /// This is the killer feature that Stadium Live doesn't have.
@@ -140,6 +141,17 @@ class _LiveGameScreenState extends ConsumerState<LiveGameScreen>
             children: [
               _buildHeader(),
               _buildScoreboard(),
+              const SizedBox(height: AppSpacing.md),
+              PitchVisualization(
+                homeName: _homeName,
+                awayName: _awayName,
+                homeLogo: _homeLogo,
+                awayLogo: _awayLogo,
+                homeScore: _homeScore,
+                awayScore: _awayScore,
+                minute: _minute,
+                isLive: _isLive,
+              ),
               _buildTallyBar(),
               Expanded(
                 child: _buildBetFeed(),
